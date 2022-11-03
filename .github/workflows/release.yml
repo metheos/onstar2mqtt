@@ -15,7 +15,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v4
         with:
-          images: michaelwoods/onstar2mqtt
+          images: bigthundersr/onstar2mqtt
           flavor: |
             latest=true
           tags: |
