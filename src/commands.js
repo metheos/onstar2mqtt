@@ -82,9 +82,13 @@ class Commands {
     //}
     
     async alert() {
-        return this.onstar.alert(["Flash"]);  
+        return this.onstar.alert();  
     }
 
+    async alertFlash() {
+        return this.onstar.alert({Commands.CONSTANTS.ALERT_ACTION.FLASH});  
+    }
+    
     async cancelAlert() {
         return this.onstar.cancelAlert();
     }
