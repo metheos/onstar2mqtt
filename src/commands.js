@@ -121,7 +121,8 @@ class Commands {
         Commands.CONSTANTS.DIAGNOSTICS.ODOMETER,
         Commands.CONSTANTS.DIAGNOSTICS.TIRE_PRESSURE,
         Commands.CONSTANTS.DIAGNOSTICS.AMBIENT_AIR_TEMPERATURE,
-        Commands.CONSTANTS.DIAGNOSTICS.LAST_TRIP_DISTANCE
+        Commands.CONSTANTS.DIAGNOSTICS.LAST_TRIP_DISTANCE,
+        Commands.CONSTANTS.DIAGNOSTICS.ENGINE_RPM
     ]}) {
         return this.onstar.diagnostics({diagnosticItem});
     }
