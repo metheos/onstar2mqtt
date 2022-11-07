@@ -89,6 +89,10 @@ class Commands {
         return this.onstar.alert({action});  
     }
     
+    async alertHonk({action = [Commands.CONSTANTS.ALERT_ACTION.HONK]}) {
+        return this.onstar.alert({action});  
+    }
+    
     async cancelAlert() {
         return this.onstar.cancelAlert();
     }
