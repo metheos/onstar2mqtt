@@ -1,8 +1,9 @@
+# onstar2mqtt
+
 [![ci](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/ci.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/codeql-analysis.yml)
 [![release](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/release.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/release.yml)
 
-# onstar2mqtt
 A service that utilizes the [OnStarJS](https://github.com/samrum/OnStarJS) library to expose OnStar data to MQTT topics.
 
 The functionality is mostly focused around EVs (specifically the Bolt EV), however PRs for other vehicle types are certainly welcome.
