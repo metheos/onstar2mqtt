@@ -73,6 +73,9 @@ icon: 'mdi:map-marker'
 8. `chargeOverride`
 9. `cancelChargeOverride`
 10. `getLocation`
+#### New in this build of onstar2mqtt:
+11. `alertFlash`
+12. `alertHonk`
 
 
 ### Lovelace Dashboard
