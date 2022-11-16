@@ -14,7 +14,7 @@ mode: single
 icon: 'mdi:car-electric'
 ```
 
-#### Triger precondition via calendar
+#### Trigger precondition via calendar
 ````yaml
 alias: Car Precondition
 description: Precondition if group.family is home (ie, at least one person).
