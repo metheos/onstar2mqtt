@@ -1,3 +1,7 @@
+[![ci](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/ci.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/codeql-analysis.yml)
+[![release](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/release.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/release.yml)
+
 # onstar2mqtt
 A service that utilizes the [OnStarJS](https://github.com/samrum/OnStarJS) library to expose OnStar data to MQTT topics.
 
@@ -32,7 +36,7 @@ docker run \
 ```yaml
   onstar2mqtt:
     container_name: onstar2mqtt
-    image: michaelwoods/onstar2mqtt
+    image: bigthundersr/onstar2mqtt
     restart: unless-stopped
     env_file:
       - /srv/containers/secrets/onstar2mqtt.env
