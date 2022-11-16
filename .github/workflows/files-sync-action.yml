@@ -1,0 +1,46 @@
+- name: Files Sync Action
+  # You may pin to the exact commit or the version.
+  # uses: adrianjost/files-sync-action@e6ef3ef6cd33a58485bee496cc85f609c4c66999
+  uses: adrianjost/files-sync-action@v1.4.1
+  with:
+    # The commit message that will be used to commit the changed files. Check the README for all interpolation options.
+
+    COMMIT_MESSAGE: # optional
+    # Run everything except for the copying, removing and commiting functionality.
+
+    DRY_RUN: # optional
+    # New line deliminated regex expressions to select files from the source repository. All filpaths start with the repos fullname without a leading slash. The delimiter between path segments is a forward slash.
+
+    FILE_PATTERNS: 
+    # Token to use to get repos and write secrets
+    GITHUB_TOKEN: 
+    # The e-mail address used to commit the synced files. Defaults to $GITHUB_ACTOR@users.noreply.github.com
+
+    GIT_EMAIL: # optional
+    # The username used to commit the synced files. Defaults to $GITHUB_ACTOR
+
+    GIT_USERNAME: # optional
+    # Will omit all delete operations for matching files present in `TARGET_REPO` but not existant in `SRC_REPO` if set to `true`. Defaults to `false`.
+
+    SKIP_DELETE: # optional
+    # Will omit all write operations for matching files present in `SRC_REPO` and `TARGET_REPO` if set to `true`. Defaults to `false`.
+
+    SKIP_REPLACE: # optional
+    # If set to true or 1, the cleanup step to remove the temporary workding directory at the end will be skipped. Usefull for debugging purposes.
+
+    SKIP_CLEANUP: # optional
+    # Repo from where files should be synced from. Defaults to $GITHUB_REPOSITORY. A custom branch can be defined by adding the branchname after a colon behind the SRC_REPO. `repoSlug` or `repoSlug:branchName`
+
+    SRC_REPO: # optional
+    # New line deliminated list of repositories. Repositires are limited to those in which the token user is an owner or collaborator. A custom branch can be defined for each repo by adding the branchname after a colon behind the repoSlug. `repoSlug` or `repoSlug:branchName`
+
+    TARGET_REPOS: 
+    # The working directory where all sync operations will be done. Defaults to `tmp-${Date.now().toString()}`
+
+    TMPDIR: # optional
+    # Prepends this to all filepaths in the source repository. Defaults to `/`.
+
+    SRC_ROOT: # optional
+    # Prepends this to all filepaths in the target repository. Defaults to `/`.
+
+    TARGET_ROOT: # optional
