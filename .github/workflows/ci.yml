@@ -47,11 +47,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       
-      - name: Notarize Docker image
-        uses: codenotary/cas-notarize-docker-image-bom-github-action@main
-        with:
-          asset: docker://bigthundersr/onstar2mqtt
-          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      #- name: Notarize Docker image
+      #  uses: codenotary/cas-notarize-docker-image-bom-github-action@main
+      #  with:
+      #    asset: docker://bigthundersr/onstar2mqtt
+      #    cas_api_key: ${{ secrets.CAS_API_KEY }}
       
       - name: Login to DockerHub
         if: github.event_name != 'pull_request'
