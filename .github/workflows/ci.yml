@@ -52,11 +52,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Notarize Docker image
-        uses: codenotary/cas-notarize-docker-image-bom-github-action@main
-        with:
-          asset: docker://bigthundersr/onstar2mqtt
-          cas_api_key: ${{ secrets.CAS_API_KEY }}
       - name: Push to DockerHub
         uses: docker/build-push-action@v3
         with:
