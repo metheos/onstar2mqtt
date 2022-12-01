@@ -1,9 +1,0 @@
-uses: adrianjost/files-sync-action@v1.0.1
-  with:
-    FILE_PATTERNS: |
-      ^LICENSE$
-      ^.github/workflows/sync-.*
-    TARGET_REPOS: |
-      BigThunderSR/homeassistant-addons-onstar2mqtt/onstar2mqtt-vehicle1/
-      BigThunderSR/homeassistant-addons-onstar2mqtt/onstar2mqtt-vehicle2/
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_FILES }}
