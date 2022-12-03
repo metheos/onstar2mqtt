@@ -5,6 +5,10 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_run:
+    workflows: ["CodeQL"]    
+    types: 
+      - completed
   # build weekly for fresh base docker image
   schedule:
     - cron: '30 4 * * 1'
