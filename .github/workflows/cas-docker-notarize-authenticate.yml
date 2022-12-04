@@ -10,6 +10,10 @@ on:
 
 jobs:
   notarize-docker-image-bom-amd64:    
+      runs-on: ubuntu-latest
+      steps:    
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Pull amd64 Docker image
         run: docker pull bigthundersr/onstar2mqtt
         shell: bash
@@ -27,7 +31,6 @@ jobs:
         with:
           asset: docker://bigthundersr/onstar2mqtt
           signerID: QmlnVGh1bmRlclNSQG91dGxvb2suY29t
-
   
   
   notarize-docker-image-bom-arm:
