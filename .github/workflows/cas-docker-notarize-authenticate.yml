@@ -2,8 +2,8 @@ name: Notarize and Authenticate Docker Image BOM with CAS
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
+  #push:
+  #  branches: [main]
   workflow_run:
     workflows: ["ci"]    
     types: [completed]
