@@ -58,7 +58,7 @@ jobs:
           distro: ${{ matrix.distro }}
           
           ## Not required, but speeds up builds
-          #githubToken: ${{ github.token }}
+          githubToken: ${{ github.token }}
           shell: /bin/bash
           install: |
             #apt-get update -y
