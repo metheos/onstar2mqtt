@@ -1,0 +1,83 @@
+name: Notarize Assets with CAS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  notarize-assets-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+    
+      - name: Notarize LICENSE
+        #--> Run the GitHub action
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:
+          # Whatever asset is being notarized, can be a target/ or dist/ compiled binary or any type of file          
+          asset: LICENSE
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize README.md        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: README.md
+          cas_api_key: ${{ secrets.CAS_API_KEY }}      
+      - name: Notarize Dockerfile        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: Dockerfile
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize HA-MQTT.md        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: HA-MQTT.md
+          cas_api_key: ${{ secrets.CAS_API_KEY }} 
+      
+      - name: Notarize package.json        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: package.json
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize package-lock.json        
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: package-lock.json
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+
+      - name: Notarize src/commands.js
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: src/commands.js
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize src/diagnostic.js
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: src/diagnostic.js
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize src/index.js
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: src/index.js
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize src/logger.js
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: src/logger.js
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize src/measurement.js
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: src/measurement.js
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize src/mqtt.js
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: src/mqtt.js
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      - name: Notarize src/vehicle.js
+        uses: codenotary/cas-notarize-asset-github-action@main
+        with:          
+          asset: src/vehicle.js
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
