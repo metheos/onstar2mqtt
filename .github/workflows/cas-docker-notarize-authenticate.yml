@@ -1,0 +1,90 @@
+name: Notarize and Authenticate Docker Image BOM with CAS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows: ["ci"]    
+    types: [completed]
+
+jobs:
+  notarize-docker-image-bom-arm:
+    runs-on: ubuntu-latest
+    name: Run on ${{ matrix.distro }} ${{ matrix.arch }}
+    
+    # Run steps on a matrix of x arch/distro combinations
+    strategy:
+      matrix:
+        include:
+          - arch: aarch64
+            distro: ubuntu_latest            
+          - arch: armv7
+            distro: ubuntu_latest
+    
+    steps:    
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - uses: uraimo/run-on-arch-action@v2
+        name: Run commands on arm
+        id: runcmdarm
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+          
+          ## Not required, but speeds up builds
+          #githubToken: ${{ github.token }}
+          shell: /bin/bash
+          install: |
+            #apt-get update -y
+            #apt-get install -y docker.io
+            case "${{ matrix.distro }}" in
+              ubuntu*|jessie|stretch|buster|bullseye)
+                apt-get update -q -y
+                apt-get install -q -y wget docker.io
+                ;;
+              fedora*)
+                dnf -y update
+                dnf -y install wget docker
+                ;;
+              alpine*)
+                apk update
+                apk add wget docker
+                ;;
+            esac
+          run: |
+            wget https://github.com/codenotary/cas/releases/download/v1.0.3/cas-v1.0.3-linux-arm64 -O "${PWD}/cas"
+            chmod a+x "${PWD}/cas"
+            export CAS_API_KEY=${{ secrets.CAS_API_KEY }}; "${PWD}/cas" login
+            case "${{ matrix.arch }}" in
+              aarch64)
+                docker pull --platform linux/arm64 bigthundersr/onstar2mqtt
+                ;;
+              armv7)docker pull --platform linux/arm/v7 bigthundersr/onstar2mqtt
+                ;;
+              ppc64le)
+                docker pull --platform linux/arm64 bigthundersr/onstar2mqtt
+                ;;
+            esac
+            
+            "${PWD}/cas" notarize --bom docker://bigthundersr/onstar2mqtt
+            "${PWD}/cas" authenticate docker://bigthundersr/onstar2mqtt
+
+      - name: Pull amd64 Docker image
+        run: docker pull bigthundersr/onstar2mqtt
+        shell: bash
+      
+      - name: Notarize amd64 Docker Image BOM
+          # --> Run the GitHub action
+          # uses: codenotary/cas-notarize-docker-image-github-action@v1.0.0
+        uses: codenotary/cas-notarize-docker-image-bom-github-action@main
+        with:
+          asset: docker://bigthundersr/onstar2mqtt
+          cas_api_key: ${{ secrets.CAS_API_KEY }}
+      
+      - name: Authenticate amd64 Docker Image BOM
+        uses: codenotary/cas-authenticate-docker-image-github-action@main
+        with:
+          asset: docker://bigthundersr/onstar2mqtt
+          signerID: QmlnVGh1bmRlclNSQG91dGxvb2suY29t
