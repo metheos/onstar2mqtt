@@ -2,16 +2,16 @@ name: ci
 
 on:
   push:
-    branches: [ main ]
+  #  branches: [ main ]
   pull_request:
-    branches: [ main ]
+  #  branches: [ main ]
   workflow_run:
     workflows: ["CodeQL"]    
     types: 
       - completed
-  # build weekly for fresh base docker image
-  schedule:
-    - cron: '30 4 * * 1'
+  # build weekly for fresh base docker image - Now triggered when CodeQL workflow runs on cron
+  #schedule:
+  #  - cron: '30 4 * * 1'
 
 jobs:
   test_build_push:
