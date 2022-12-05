@@ -5,7 +5,7 @@ on:
   #push:
   #  branches: [main]
   workflow_run:
-    workflows: ["ci"]    
+    workflows: ["ci", "release"]    
     types: [completed]
 
 concurrency:
