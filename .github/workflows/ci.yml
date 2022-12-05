@@ -13,6 +13,10 @@ on:
   #schedule:
   #  - cron: '30 4 * * 1'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test_build_push:
     name: ci - test, build, push
