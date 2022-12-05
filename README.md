@@ -37,7 +37,7 @@ docker run \
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
-  michaelwoods/onstar2mqtt:latest
+  bigthundersr/onstar2mqtt:latest
 ```
 
 ### docker-compose
