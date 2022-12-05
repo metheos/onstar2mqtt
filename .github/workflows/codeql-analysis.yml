@@ -18,7 +18,7 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main ]
-  # Trigger weekly build for fresh base docker image through CI after weekly CodeQG run completes
+  # Trigger weekly build for fresh base docker image through CI after weekly CodeQL run completes
   schedule:
     #- cron: '28 1 * * 0'
     - cron: '30 4 * * 1'
