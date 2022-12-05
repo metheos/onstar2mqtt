@@ -31,7 +31,7 @@ jobs:
           cas_api_key: ${{ secrets.CAS_API_KEY }}
       
       - name: Authenticate amd64 Docker Image BOM
-        uses: codenotary/cas-authenticate-docker-bom-github-actionn@main
+        uses: codenotary/cas-authenticate-docker-bom-github-action@main
         with:
           asset: docker://bigthundersr/onstar2mqtt
           signerID: QmlnVGh1bmRlclNSQG91dGxvb2suY29t
