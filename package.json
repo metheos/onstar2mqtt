@@ -6,8 +6,6 @@
   "scripts": {
     "coverage": "nyc npm test",
     "lint": "npx eslint src test",
-    "coverage": "nyc npm test",
-    "lint": "npx eslint src test",
     "start": "node src/index.js",
     "test": "mocha"
   },
@@ -23,10 +21,6 @@
     "homeassistant",
     "home-assistant",
     "home assistant"
-    "chevrolet",
-    "homeassistant",
-    "home-assistant",
-    "home assistant"
   ],
   "author": "Michael Woods",
   "license": "MIT",
@@ -36,12 +30,7 @@
   "homepage": "https://github.com/michaelwoods/onstar2mqtt#readme",
   "dependencies": {
     "async-mqtt": "^2.6.3",
-    "async-mqtt": "^2.6.3",
     "convert-units": "^2.3.4",
-    "lodash": "^4.17.21",
-    "onstarjs": "^2.3.13",
-    "uuid": "^9.0.0",
-    "winston": "^3.8.2"
     "lodash": "^4.17.21",
     "onstarjs": "^2.3.13",
     "uuid": "^9.0.0",
