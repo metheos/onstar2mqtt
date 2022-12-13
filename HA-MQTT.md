@@ -1,6 +1,6 @@
 # Sample Configs for MQTT Home Assistant Integration
 
-## Command Example
+## Commands
 
 ### Example script yaml
 
@@ -44,7 +44,7 @@ mode: single
 Unfortunately, the MQTT Device tracker uses a home/not_home state and the MQTT Json device tracker does not support
 the discovery schema so a manual entity configuration is required.
 
-device_tracker yaml:
+#### device_tracker yaml
 
 ```yaml
 device_tracker:
