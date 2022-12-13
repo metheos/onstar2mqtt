@@ -1,6 +1,6 @@
-# Sample configs for MQTT Home Assistant integration
+# Sample Configs for MQTT Home Assistant Integration
 
-## Command Scripts
+## Command Example
 
 ### Example script yaml
 
@@ -44,7 +44,7 @@ mode: single
 Unfortunately, the MQTT Device tracker uses a home/not_home state and the MQTT Json device tracker does not support
 the discovery schema so a manual entity configuration is required.
 
-device tracker yaml:
+device_tracker yaml:
 
 ```yaml
 device_tracker:
@@ -66,7 +66,7 @@ mode: single
 icon: 'mdi:map-marker'
 ```
 
-#### Commands
+#### Available Commands
 
 [OnStarJS Command Docs](https://github.com/samrum/OnStarJS#commands)
 
