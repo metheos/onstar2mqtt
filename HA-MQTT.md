@@ -1,8 +1,9 @@
-Sample configs for MQTT Home Assistant integration.
+# Sample configs for MQTT Home Assistant integration
 
-### Commands
+## Command Scripts
 
-#### example script yaml:
+### Example script yaml
+
 ```yaml
 alias: Car - Start Vehicle
 sequence:
@@ -15,6 +16,7 @@ icon: 'mdi:car-electric'
 ```
 
 #### Trigger precondition via calendar
+
 ````yaml
 alias: Car Precondition
 description: Precondition if group.family is home (ie, at least one person).
@@ -38,10 +40,12 @@ mode: single
 ````
 
 ### Location
+
 Unfortunately, the MQTT Device tracker uses a home/not_home state and the MQTT Json device tracker does not support
 the discovery schema so a manual entity configuration is required.
 
 device tracker yaml:
+
 ```yaml
 device_tracker:
   - platform: mqtt_json
@@ -49,7 +53,8 @@ device_tracker:
       your_car_name: homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state
 ```
 
-#### script yaml:
+#### script yaml
+
 ```yaml
 alias: Car - Location
 sequence:
@@ -61,8 +66,10 @@ mode: single
 icon: 'mdi:map-marker'
 ```
 
-#### Commands:
+#### Commands
+
 [OnStarJS Command Docs](https://github.com/samrum/OnStarJS#commands)
+
 1. `getAccountVehicles`
 2. `startVehicle`
 3. `cancelStartVehicle`
@@ -73,17 +80,20 @@ icon: 'mdi:map-marker'
 8. `chargeOverride`
 9. `cancelChargeOverride`
 10. `getLocation`
-#### New in this build of onstar2mqtt:
+
+#### New in this build of onstar2mqtt
+
 11. `alertFlash`
 12. `alertHonk`
 
-
 ### Lovelace Dashboard
+
 Create a new dashboard, or use the cards in your own view. The `mdi:car-electric` icon works well here.
 
 ![lovelace screenshot](images/lovelace.png)
 
-#### dashboard yaml:
+#### Dashboard yaml
+
 ```yaml
 views:
   - badges: []
