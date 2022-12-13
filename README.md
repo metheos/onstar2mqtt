@@ -12,6 +12,7 @@ A service that utilizes the [OnStarJS](https://github.com/samrum/OnStarJS) libra
 The functionality is mostly focused around EVs (specifically the Bolt EV), however PRs for other vehicle types are certainly welcome.
 
 There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact, it would be nice if they'd even respond to development requests so we wouldn't have to reverse engineer their API.
+There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact, it would be nice if they'd even respond to development requests so we wouldn't have to reverse engineer their API.
 
 ## Running
 
@@ -68,6 +69,7 @@ MQTT_PASSWORD=
 ### Node.js
 
 It's a typical node.js application, define the same environment values as described in the docker sections and run with:
+`npm run start`. Currently, this is only tested with Node.js 18.x.
 `npm run start`. Currently, this is only tested with Node.js 18.x.
 
 ### Home Assistant configuration templates

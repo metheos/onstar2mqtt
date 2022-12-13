@@ -143,3 +143,5 @@ class Commands {
 }
 
 module.exports = Commands;
+
+module.exports = Commands;
