@@ -53,8 +53,7 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npx nyc --reporter=lcov npm test
-      #- run: export CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }}
-      - run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
+      - run: CODACY_PROJECT_TOKEN=$CODACY_PROJECT_TOKEN bash <(curl -Ls https://coverage.codacy.com/get.sh)      
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2.1.0
