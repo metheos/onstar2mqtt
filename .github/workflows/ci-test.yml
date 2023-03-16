@@ -6,7 +6,7 @@ on:
   #pull_request:
   #  branches: [ main ]
   workflow_run:
-    workflows: ["CodeQL"]    
+    workflows: ["CodeQL - Test"]    
     types: 
       - completed
   # build weekly for fresh base docker image - Now triggered when CodeQL workflow runs on cron
