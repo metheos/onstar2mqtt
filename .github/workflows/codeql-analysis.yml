@@ -21,7 +21,7 @@ on:
   # Trigger weekly build for fresh base docker image through CI after weekly CodeQL run completes
   schedule:
     #- cron: '28 1 * * 0'
-    - cron: '30 4 * * 1'
+    - cron: '30 3 * * 1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
