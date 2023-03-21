@@ -9,9 +9,9 @@ on:
     workflows: ["CodeQL"]    
     types: 
       - completed
-  # build weekly for fresh base docker image - Now triggered when CodeQL workflow runs on cron
-  #schedule:
-  #  - cron: '30 4 * * 1'
+  # build weekly for fresh base docker image
+  schedule:
+    - cron: '30 4 * * 1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
