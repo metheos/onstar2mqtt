@@ -26,6 +26,7 @@ Collect the following information:
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
 
 ### Docker
+
 [Docker Hub](https://hub.docker.com/r/bigthundersr/onstar2mqtt)
 
 ```shell
@@ -57,6 +58,7 @@ docker run \
 ```
 
 ### docker-compose
+
 [Docker Hub](https://hub.docker.com/r/bigthundersr/onstar2mqtt)
 
 ```yaml
@@ -86,7 +88,6 @@ docker run \
     - ONSTAR_VIN=
     - MQTT_HOST=
 ```
-
 
 onstar2mqtt.env:
 
