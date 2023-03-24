@@ -25,7 +25,8 @@ Collect the following information:
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
 
-### [Docker](https://hub.docker.com/r/michaelwoods/onstar2mqtt)
+### Docker
+[Docker Hub](https://hub.docker.com/r/bigthundersr/onstar2mqtt)
 
 ```shell
 docker run \
@@ -40,7 +41,23 @@ docker run \
   bigthundersr/onstar2mqtt:latest
 ```
 
+[GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt)
+
+```shell
+docker run \
+  --env ONSTAR_DEVICEID= \
+  --env ONSTAR_VIN= \
+  --env ONSTAR_USERNAME= \
+  --env ONSTAR_PASSWORD= \
+  --env ONSTAR_PIN= \
+  --env MQTT_HOST= \
+  --env MQTT_USERNAME \
+  --env MQTT_PASSWORD \
+  ghcr.io/bigthundersr/onstar2mqtt:latest
+```
+
 ### docker-compose
+[Docker Hub](https://hub.docker.com/r/bigthundersr/onstar2mqtt)
 
 ```yaml
   onstar2mqtt:
@@ -54,6 +71,22 @@ docker run \
     - ONSTAR_VIN=
     - MQTT_HOST=
 ```
+
+[GitHub Container Registry](https://github.com/BigThunderSR/onstar2mqtt/pkgs/container/onstar2mqtt)
+
+```yaml
+  onstar2mqtt:
+    container_name: onstar2mqtt
+    image: ghcr.io/bigthundersr/onstar2mqtt
+    restart: unless-stopped
+    env_file:
+      - /srv/containers/secrets/onstar2mqtt.env
+    environment:
+    - ONSTAR_DEVICEID=
+    - ONSTAR_VIN=
+    - MQTT_HOST=
+```
+
 
 onstar2mqtt.env:
 
