@@ -34,7 +34,9 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v4
         with:
-          images: bigthundersr/onstar2mqtt, ghcr.io/bigthundersr/onstar2mqtt
+          images: |
+            bigthundersr/onstar2mqtt 
+            ghcr.io/bigthundersr/onstar2mqtt
           flavor: |
             latest=true
           tags: |
