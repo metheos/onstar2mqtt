@@ -126,4 +126,12 @@ MQTT auto discovery is enabled. For further integrations and screenshots see [HA
 
 `npm version [major|minor|patch] -m "Version %s" && git push --follow-tags`
 
-Publish the release on GitHub to trigger a release build (ie, update 'latest' docker tag).
+Publish the release on GitHub to trigger a release build (i.e. update 'latest' docker tag).
+
+## If you would like to run this as a Home Assistant add-on
+
+[https://github.com/BigThunderSR/homeassistant-addons-onstar2mqtt](https://github.com/BigThunderSR/homeassistant-addons-onstar2mqtt)
+
+## My other related project which provides additional capabilities through Node-RED
+
+[https://github.com/BigThunderSR/node-red-contrib-onstar2](https://github.com/BigThunderSR/node-red-contrib-onstar2)
