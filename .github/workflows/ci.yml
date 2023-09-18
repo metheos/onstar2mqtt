@@ -13,9 +13,9 @@ on:
   schedule:
     - cron: '30 4 * * 1'
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+#concurrency:
+#  group: ${{ github.workflow }}-${{ github.ref }}
+#  cancel-in-progress: false
 
 jobs:
   test_build_push:
