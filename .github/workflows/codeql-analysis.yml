@@ -23,9 +23,9 @@ on:
     #- cron: '28 1 * * 0'
     - cron: '30 3 * * 1'
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+#concurrency:
+#  group: ${{ github.workflow }}-${{ github.ref }}
+#  cancel-in-progress: false
 
 jobs:
   analyze:
