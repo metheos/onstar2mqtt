@@ -9,7 +9,7 @@
 
 A service that utilizes the [OnStarJS](https://github.com/samrum/OnStarJS) library to expose OnStar data to MQTT topics.
 
-The functionality is mostly focused around EVs (specifically the Bolt EV), however PRs for other vehicle types are certainly welcome.
+~~The functionality is mostly focused around EVs (specifically the Bolt EV), however PRs for other vehicle types are certainly welcome.~~
 
 There is no affiliation with this project and GM, Chevrolet nor OnStar. In fact, it would be nice if they'd even respond to development requests so we wouldn't have to reverse engineer their API.
 
@@ -22,8 +22,12 @@ Collect the following information:
 1. Your car's VIN. Easily found in the monthly OnStar diagnostic emails.
 1. MQTT server information: hostname, username, password
     1. If using TLS, define `MQTT_PORT` and `MQTT_TLS=true`
+    1. NEW! - Provide MQTT topic (MQTT_ONSTAR_POLLING_STATUS_TOPIC) for Onstar Data Polling Status to monitor success/failure when OnStar is polled for data
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
+
+1. NEW - Command Response Status is now published to MQTT topics!
+    1. Topic format: homeassistant/<VIN>/command/<CommandName>/state
 
 ### Docker
 
@@ -39,6 +43,7 @@ docker run \
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
+  --env MQTT_ONSTAR_POLLING_STATUS_TOPIC \
   bigthundersr/onstar2mqtt:latest
 ```
 
@@ -54,6 +59,7 @@ docker run \
   --env MQTT_HOST= \
   --env MQTT_USERNAME \
   --env MQTT_PASSWORD \
+  --env MQTT_ONSTAR_POLLING_STATUS_TOPIC \
   ghcr.io/bigthundersr/onstar2mqtt:latest
 ```
 
@@ -97,6 +103,8 @@ ONSTAR_PASSWORD=
 ONSTAR_PIN=
 MQTT_USERNAME=
 MQTT_PASSWORD=
+MQTT_ONSTAR_POLLING_STATUS_TOPIC=
+
 ```
 
 ### Node.js

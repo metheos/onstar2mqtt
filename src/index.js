@@ -31,6 +31,7 @@ const mqttConfig = {
     tls: process.env.MQTT_TLS || false,
     prefix: process.env.MQTT_PREFIX || 'homeassistant',
     namePrefix: process.env.MQTT_NAME_PREFIX || '',
+    pollingStatusTopic: process.env.MQTT_ONSTAR_POLLING_STATUS_TOPIC,    
 };
 logger.info('MQTT Config', {mqttConfig});
 
@@ -83,11 +84,19 @@ const configureMQTT = async (commands, client, mqttHA) => {
             return;
         }
         const commandFn = cmd.bind(commands);
-        logger.info('Command sent', { command });
+        logger.info('Command sent', { command });        
+        const topicArray = _.concat({topic},'/',{ command }.command,'/','state');        
+        const commandStatusTopic = topicArray.map(item => item.topic || item).join('');
+        logger.info(commandStatusTopic);
+        client.publish(commandStatusTopic, JSON.stringify({ "Command":"Sent" }), {retain: false});
         commandFn(options || {})
             .then(data => {
-                // TODO refactor the response handling for commands
-                logger.info('Command completed', { command });
+                // DONE! - TODO refactor the response handling for commands
+                logger.info('Command completed', { command });                
+                const topicArray = _.concat({topic},'/',{ command }.command,'/','state');                        
+                const commandStatusTopic = topicArray.map(item => item.topic || item).join('');
+                logger.info(commandStatusTopic);
+                client.publish(commandStatusTopic, JSON.stringify({ "Command":"Completed Successfully" }), {retain: false});
                 const responseData = _.get(data, 'response.data');
                 if (responseData) {
                     logger.info('Command response data', { responseData });
@@ -102,7 +111,11 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     }
                 }
             })
-            .catch(err=> logger.error('Command error', {command, err}));
+            .catch((err)=> {logger.error('Command error', {command, err})            
+            const topicArray = _.concat({topic},'/',{ command }.command,'/','state');            
+            const commandStatusTopic = topicArray.map(item => item.topic || item).join('');
+            logger.info(commandStatusTopic);
+            client.publish(commandStatusTopic, JSON.stringify({"Command": err}), {retain: false})});
     });
     const topic = mqttHA.getCommandTopic();
     logger.info('Subscribed to command topic', {topic});
@@ -170,18 +183,35 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 );
             }
             await Promise.all(publishes);
+            client.publish(mqttConfig.pollingStatusTopic, JSON.stringify({"ok":{"message":"Data Polled Successfully"}}), {retain: false})
         };
 
         const main = async () => run()
-            .then(() => logger.info('Updates complete, sleeping.'))
-            .catch(e => {
+            .then(() => logger.info('Updates complete, sleeping.'))            
+            .catch((e) => {
                 if (e instanceof Error) {
-                    logger.error('Error', {error: _.pick(e, [
-                        'message', 'stack',
-                        'response.status', 'response.statusText', 'response.headers', 'response.data',
-                        'request.method', 'request.body', 'request.contentType', 'request.headers', 'request.url'
-                        ])});
+                  const errorPayload = {
+                    error: _.pick(e, [
+                      'message',
+                      'stack',
+                      'response.status',
+                      'response.statusText',
+                      'response.headers',
+                      'response.data',
+                      'request.method',
+                      'request.body',
+                      'request.contentType',
+                      'request.headers',
+                      'request.url'
+                    ])
+                  };
+                  const errorJson = JSON.stringify(errorPayload)
+                  client.publish(mqttConfig.pollingStatusTopic, errorJson, {retain: false});
+                  logger.error('Error', {error: errorPayload});
+ 
                 } else {
+                    const errorJson = JSON.stringify({ error: e })
+                    client.publish(mqttConfig.pollingStatusTopic, errorJson, {retain: false});
                     logger.error('Error', {error: e});
                 }
             });
