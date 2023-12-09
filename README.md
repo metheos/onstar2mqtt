@@ -27,7 +27,7 @@ Collect the following information:
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
 
 * NEW - Command Response Status is now published to MQTT topics!
-    * Topic format: homeassistant/'<VIN>'/command/'<CommandName>'/state
+    * Topic format: homeassistant/{VIN}/command/{CommandName}/state
 
 ### Docker
 
