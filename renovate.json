@@ -10,13 +10,13 @@
   "packageRules": [
     { 
      "matchManagers": ["npm"],
-     "labels": ["javascript"],
+     "addLabels": ["javascript"],
      "matchManagers": ["github-actions"],
-     "labels": ["github_actions"],
+     "addLabels": ["github_actions"],
      "matchPackagePatterns": ["dockerfile"],
-     "labels": ["dockerfile"],
+     "addLabels": ["dockerfile"],
      "matchManagers": ["nvm"],
-     "labels": ["nvm"] 
+     "addLabels": ["nvm"] 
     }
   ]
 }
