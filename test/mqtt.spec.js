@@ -86,6 +86,7 @@ describe('MQTT', () => {
                         model: 2020,
                         name: '2020 foo bar'
                     },
+                    state_class: 'measurement',
                     device_class: 'temperature',
                     json_attributes_template: undefined,
                     name: 'Ambient Air Temperature',
@@ -107,6 +108,7 @@ describe('MQTT', () => {
                         model: 2020,
                         name: '2020 foo bar'
                     },
+                    state_class: 'measurement',
                     device_class: 'temperature',
                     json_attributes_template: undefined,
                     name: 'Ambient Air Temperature F',
@@ -139,7 +141,8 @@ describe('MQTT', () => {
                         manufacturer: 'foo',
                         model: 2020,
                         name: '2020 foo bar'
-                    },
+                    },                      
+                    state_class: undefined,
                     device_class: undefined,
                     json_attributes_template: undefined,
                     name: 'Priority Charge Indicator',
@@ -175,6 +178,7 @@ describe('MQTT', () => {
                         model: 2020,
                         name: '2020 foo bar'
                     },
+                    state_class: 'measurement',
                     device_class: 'pressure',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front} | tojson }}",
                     name: 'Tire Pressure: Left Front',
