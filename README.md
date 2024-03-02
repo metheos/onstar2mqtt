@@ -28,9 +28,13 @@ Collect the following information:
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
 
-* **NEW - Command Response Status is now published to MQTT topics!**
-    * Topic format: MQTT_PREFIX/{VIN}/command/{commandName}/state
-        * Note: Unless defined, default MQTT_PREFIX=homeassistant   
+- **NEW - Command Response Status is now published to MQTT topics!**
+  - Topic format: MQTT_PREFIX/{VIN}/command/{commandName}/state
+    - Note: Unless defined, default MQTT_PREFIX=homeassistant
+
+- **NEW - Sensor specific messages are now published to MQTT as sensor attributes which are visible in HA**
+
+- **NEW - Most non-binary sensors have a state_class assigned to allow collection of long-term statistics in HA**
 
 ### Docker
 
