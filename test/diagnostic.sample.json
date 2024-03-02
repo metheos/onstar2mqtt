@@ -280,6 +280,63 @@
               "unit": "%"
             }
           ]
+        },
+        {
+          "name": "FUEL TANK INFO",
+          "diagnosticElement": [
+            {
+              "name": "FUEL AMOUNT",
+              "status": "NA",
+              "message": "na",
+              "value": "19.98",
+              "unit": "L"
+            },
+            {
+              "name": "FUEL CAPACITY",
+              "status": "NA",
+              "message": "na",
+              "value": "60.0",
+              "unit": "L"
+            },
+            {
+              "name": "FUEL LEVEL",
+              "status": "NA",
+              "message": "na",
+              "value": "33.3",
+              "unit": "%"
+            },
+            {
+              "name": "FUEL LEVEL IN GAL",
+              "status": "NA",
+              "message": "na",
+              "value": "19.98",
+              "unit": "L"
+            }
+          ]
+        },
+        {
+          "name": "LIFETIME FUEL ECON",
+          "diagnosticElement": [
+            {
+              "name": "LIFETIME FUEL ECON",
+              "status": "NA",
+              "message": "na",
+              "value": "11.86",
+              "unit": "kmpl"
+            }
+          ]
+        },
+        {
+          "name": "LIFETIME FUEL USED",
+          "diagnosticElement": [
+            {
+              "name": "LIFETIME FUEL USED",
+              "status": "NA",
+              "message": "na",
+              "value": "4476.94",
+              "unit": "L"
+            }
+          ]
         }
       ]
     }
