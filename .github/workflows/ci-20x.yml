@@ -76,12 +76,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push to DockerHub and GHCR
-        uses: docker/build-push-action@v5
-        with:
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+      #- name: Push to DockerHub and GHCR
+      #  uses: docker/build-push-action@v5
+      #  with:
+      #    platforms: linux/amd64,linux/arm64,linux/arm/v7
       #    push: ${{ github.event_name != 'pull_request' }}
-					 push: false
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          labels: ${{ steps.docker_meta.outputs.labels }}
-          outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=OnStarJS wrapper for MQTT
+      #    tags: ${{ steps.docker_meta.outputs.tags }}
+      #    labels: ${{ steps.docker_meta.outputs.labels }}
+      #    outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=OnStarJS wrapper for MQTT
