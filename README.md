@@ -7,7 +7,7 @@
 [![Authenticate Assets with CAS](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas_authenticate.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas_authenticate.yml)
 [![Notarize and Authenticate Docker Image BOM with CAS](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas-docker-notarize-authenticate.yml/badge.svg)](https://github.com/BigThunderSR/onstar2mqtt/actions/workflows/cas-docker-notarize-authenticate.yml) -->
 
-A service that utilizes the [OnStarJS](https://github.com/samrum/OnStarJS) library to expose OnStar data to MQTT topics.
+A service that utilizes the [OnStarJS](https://github.com/samrum/OnStarJS) library to expose OnStar data to MQTT topics. Please note that only US and Canadian OnStar accounts are known to work with this integration.
 
 ~~The functionality is mostly focused around EVs (specifically the Bolt EV), however PRs for other vehicle types are certainly welcome.~~
 
