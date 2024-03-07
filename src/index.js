@@ -7,7 +7,7 @@ const {Diagnostic} = require('./diagnostic');
 const MQTT = require('./mqtt');
 const Commands = require('./commands');
 const logger = require('./logger');
-const CircularJSON = require('circular-json');
+//const CircularJSON = require('circular-json');
 
 
 
@@ -69,7 +69,7 @@ const connectMQTT = async availabilityTopic => {
     };
     logger.info('Connecting to MQTT', {url, config: _.omit(config, 'password')});
     const client = await mqtt.connectAsync(url, config);
-    logger.info('Connected to MQTT');
+    logger.info('Connected to MQTT!');
     return client;
 }
 
@@ -78,28 +78,28 @@ const configureMQTT = async (commands, client, mqttHA) => {
         return;
 
     client.on('message', (topic, message) => {
-        logger.debug('Subscription message', {topic, message});
-        const {command, options} = JSON.parse(message);
+        logger.debug('Subscription message:', { topic, message });
+        const { command, options } = JSON.parse(message);
         const cmd = commands[command];
-        const topicArray = _.concat({topic},'/',{ command }.command,'/','state');        
+        const topicArray = _.concat({ topic }, '/', { command }.command, '/', 'state');
         const commandStatusTopic = topicArray.map(item => item.topic || item).join('');
         if (!cmd) {
-            logger.error('Command not found', {command});
+            logger.error('Command not found', { command });
             return;
         }
         const commandFn = cmd.bind(commands);
-        logger.info('Command sent', { command });        
-        logger.info(commandStatusTopic);
-        client.publish(commandStatusTopic, JSON.stringify({ "Command":"Sent" }), {retain: true});
+        logger.warn('Command sent:', { command });
+        //logger.info('Command Status Topic:', commandStatusTopic);
+        client.publish(commandStatusTopic, JSON.stringify({ "Command": "Sent" }), { retain: true });
         commandFn(options || {})
             .then(data => {
                 // TODO refactor the response handling for commands - Partially Done!
-                logger.info('Command completed', { command });                
-                logger.info(commandStatusTopic);
-                client.publish(commandStatusTopic, JSON.stringify({ "Command":"Completed Successfully" }), {retain: true});
+                logger.warn('Command completed', { command });
+                logger.warn('Command Status Topic:', commandStatusTopic);
+                client.publish(commandStatusTopic, JSON.stringify({ "Command": "Completed Successfully" }), { retain: true });
                 const responseData = _.get(data, 'response.data');
                 if (responseData) {
-                    logger.info('Command response data', { responseData });
+                    logger.warn('Command response data:', { responseData });
                     const location = _.get(data, 'response.data.commandResponse.body.location');
                     if (location) {
                         const topic = mqttHA.getStateTopic({ name: command });
@@ -107,17 +107,68 @@ const configureMQTT = async (commands, client, mqttHA) => {
                         // doesn't have discovery
                         client.publish(topic,
                             JSON.stringify({ latitude: location.lat, longitude: location.long }), { retain: true })
-                            .then(() => logger.info('Published location to topic.', { topic }));
+                            .then(() => logger.warn('Published location to topic.', { topic }));
                     }
-                }
+                    const diagnostics = _.get(data, 'response.data.commandResponse.body.diagnosticResponse');
+                    if (diagnostics) {
+                        //const configurations = new Map();
+                        async () => {
+                            const vehicle = await getCurrentVehicle(commands);
+                            const states = new Map();
+                            const v = vehicle;
+                            //logger.info('Requesting diagnostics');
+                            const statsRes = await commands.diagnostics({diagnosticItem: v.getSupported()});
+                            //logger.info('Diagnostic request status', {status: _.get(statsRes, 'status')});
+                            const stats = _.map(
+                                _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse'),
+                                d => new Diagnostic(d)
+                            );
+                            logger.debug('Diagnostic request response', {stats: _.map(stats, s => s.toString())});
+                
+                            const publishes = [];
+                            // update sensor states
+                            for (let [topic, state] of states) {
+                                logger.warn('Publishing message', {topic, state});
+                                publishes.push(
+                                    client.publish(topic, JSON.stringify(state), {retain: true})
+                                );
+                            }
+                            await Promise.all(publishes);
+                
+                    }
+                }}
             })
-            .catch((err)=> {logger.error('Command error', {command, err})            
-            logger.info(commandStatusTopic);
-            client.publish(commandStatusTopic, CircularJSON.stringify({"Command": err}), {retain: true})});
+            //.catch((err)=> {logger.error('Command error', {command, err})            
+            //logger.info(commandStatusTopic);
+            //client.publish(commandStatusTopic, CircularJSON.stringify({"Command": err}), {retain: true})});
+            .catch((e) => {
+                if (e instanceof Error) {
+                    const errorPayload = {
+                        error: _.pick(e, [
+                            'message',
+                            'stack',
+                            'response.status',
+                            'response.statusText',
+                            'response.headers',
+                            'response.data',
+                            'request.method',
+                            'request.body',
+                            'request.contentType',
+                            'request.headers',
+                            'request.url'
+                        ])
+                    };
+                    //const errorJson = JSON.stringify(errorPayload);
+                    logger.error('Command Error!', { command, errorPayload });
+                    //logger.info('Command Status Topic:', commandStatusTopic);
+                    client.publish(commandStatusTopic, JSON.stringify({ "Command": errorPayload }), { retain: true });
+                }
+            });
     });
     const topic = mqttHA.getCommandTopic();
-    logger.info('Subscribed to command topic', {topic});
+    logger.info('Subscribed to command topic:', { topic });
     await client.subscribe(topic);
+
 };
 
 (async () => {
@@ -183,7 +234,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
             await Promise.all(publishes);
             const topicArray = _.concat(mqttConfig.pollingStatusTopic,'/','state');        
             const pollingStatusTopicState = topicArray.map(item => item.topic || item).join('');
-            client.publish(pollingStatusTopicState, JSON.stringify({"ok":{"message":"Data Polled Successfully"}}), {retain: false})
+            //client.publish(pollingStatusTopicState, JSON.stringify({"ok":{"message":"Data Polled Successfully"}}), {retain: false})
+            client.publish(pollingStatusTopicState, JSON.stringify({"ok":{"message":"Data Polled Successfully","error":{"message":"N/A","response":{"status":0,"statusText":"N/A"}}}}), {retain: false})
             const topicArrayTF = _.concat(mqttConfig.pollingStatusTopic,'/','lastpollsuccessful');        
             const pollingStatusTopicTF = topicArrayTF.map(item => item.topic || item).join('');
             client.publish(pollingStatusTopicTF, "true", {retain: false});
@@ -213,7 +265,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                   const topicArray = _.concat(mqttConfig.pollingStatusTopic,'/','state');        
                   const pollingStatusTopicState = topicArray.map(item => item.topic || item).join('');
                   client.publish(pollingStatusTopicState, errorJson, {retain: false});
-                  logger.error('Error', {error: errorPayload});
+                  logger.error('Error:', {error: errorPayload});
                   const topicArrayTF = _.concat(mqttConfig.pollingStatusTopic,'/','lastpollsuccessful');        
                   const pollingStatusTopicTF = topicArrayTF.map(item => item.topic || item).join('');
                   client.publish(pollingStatusTopicTF, "false", {retain: false})
@@ -223,7 +275,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     const topicArray = _.concat(mqttConfig.pollingStatusTopic,'/','state');        
                     const pollingStatusTopicState = topicArray.map(item => item.topic || item).join('');
                     client.publish(pollingStatusTopicState, errorJson, {retain: false});
-                    logger.error('Error', {error: e});
+                    logger.error('Error:', {error: e});
                     const topicArrayTF = _.concat(mqttConfig.pollingStatusTopic,'/','lastpollsuccessful');        
                     const pollingStatusTopicTF = topicArrayTF.map(item => item.topic || item).join('');
                     client.publish(pollingStatusTopicTF, "false", {retain: false})
