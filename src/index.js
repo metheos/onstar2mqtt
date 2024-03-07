@@ -94,7 +94,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
         commandFn(options || {})
             .then(data => {
                 // TODO refactor the response handling for commands - Partially Done!
-                logger.warn('Command completed', { command });
+                logger.warn('Command completed:', { command });
                 logger.warn('Command Status Topic:', commandStatusTopic);
                 client.publish(commandStatusTopic, JSON.stringify({ "Command": "Completed Successfully" }), { retain: true });
                 const responseData = _.get(data, 'response.data');
@@ -128,7 +128,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             const publishes = [];
                             // update sensor states
                             for (let [topic, state] of states) {
-                                logger.warn('Publishing message', {topic, state});
+                                logger.warn('Publishing message:', {topic, state});
                                 publishes.push(
                                     client.publish(topic, JSON.stringify(state), {retain: true})
                                 );
@@ -218,7 +218,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 if (!config.configured) {
                     config.configured = true;
                     const {payload} = config;
-                    logger.info('Publishing message', {topic, payload});
+                    logger.info('Publishing message:', {topic, payload});
                     publishes.push(
                         client.publish(topic, JSON.stringify(payload), {retain: true})
                     );
@@ -226,7 +226,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
             }
             // update sensor states
             for (let [topic, state] of states) {
-                logger.info('Publishing message', {topic, state});
+                logger.info('Publishing message:', {topic, state});
                 publishes.push(
                     client.publish(topic, JSON.stringify(state), {retain: true})
                 );
