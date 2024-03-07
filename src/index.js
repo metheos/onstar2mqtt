@@ -235,7 +235,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
             const topicArray = _.concat(mqttConfig.pollingStatusTopic,'/','state');        
             const pollingStatusTopicState = topicArray.map(item => item.topic || item).join('');
             //client.publish(pollingStatusTopicState, JSON.stringify({"ok":{"message":"Data Polled Successfully"}}), {retain: false})
-            client.publish(pollingStatusTopicState, JSON.stringify({"ok":{"message":"Data Polled Successfully","error":{"message":"N/A","response":{"status":0,"statusText":"N/A"}}}}), {retain: false})
+            client.publish(pollingStatusTopicState, JSON.stringify({"error":{"message":"N/A","response":{"status":0,"statusText":"N/A"}}}), {retain: false})
             const topicArrayTF = _.concat(mqttConfig.pollingStatusTopic,'/','lastpollsuccessful');        
             const pollingStatusTopicTF = topicArrayTF.map(item => item.topic || item).join('');
             client.publish(pollingStatusTopicTF, "true", {retain: false});
