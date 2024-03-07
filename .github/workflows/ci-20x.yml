@@ -19,7 +19,7 @@ on:
 
 jobs:
   test_build_push:
-    name: ci - test, build, push
+    name: ci 20.x - test, build #, push
     runs-on: ubuntu-latest
 
     strategy:
