@@ -148,7 +148,7 @@ describe('MQTT', () => {
                         model: 2020,
                         name: '2020 foo bar'
                     },
-                    state_class: 'measurement',
+                    state_class: 'total_increasing',
                     device_class: 'distance',
                     json_attributes_template: undefined,
                     name: 'Odometer',
@@ -170,7 +170,7 @@ describe('MQTT', () => {
                         model: 2020,
                         name: '2020 foo bar'
                     },
-                    state_class: 'measurement',
+                    state_class: 'total_increasing',
                     device_class: 'distance',
                     json_attributes_template: undefined,
                     name: 'Odometer Mi',
