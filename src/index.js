@@ -89,13 +89,13 @@ const configureMQTT = async (commands, client, mqttHA) => {
         }
         const commandFn = cmd.bind(commands);
         logger.warn('Command sent:', { command });
-        logger.info('Command Status Topic1:', commandStatusTopic);
+        logger.info('Command Status Topic:', {commandStatusTopic});
         client.publish(commandStatusTopic, JSON.stringify({ "Command": "Sent" }), { retain: true });
         commandFn(options || {})
             .then(data => {
                 // TODO refactor the response handling for commands - Partially Done!
                 logger.warn('Command completed:', { command });
-                logger.warn('Command Status Topic2:', commandStatusTopic);
+                logger.warn('Command Status Topic:', {commandStatusTopic});
                 client.publish(commandStatusTopic, JSON.stringify({ "Command": "Completed Successfully" }), { retain: true });
                 const responseData = _.get(data, 'response.data');
                 if (responseData) {
@@ -138,7 +138,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     };
                     //const errorJson = JSON.stringify(errorPayload);
                     logger.error('Command Error!', { command, error: errorPayload });
-                    logger.info('Command Status Topic3:', commandStatusTopic);
+                    logger.error('Command Status Topic for Errored Command:', {commandStatusTopic});
                     client.publish(commandStatusTopic, JSON.stringify({ "Command": errorPayload }), { retain: true });
                 }
             });
