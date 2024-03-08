@@ -89,7 +89,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
         }
         const commandFn = cmd.bind(commands);
         logger.warn('Command sent:', { command });
-        logger.info('Command Status Topic:', { commandStatusTopic });
+        logger.warn('Command Status Topic:', { commandStatusTopic });
         client.publish(commandStatusTopic, JSON.stringify({ "Command": "Sent" }), { retain: true });
         commandFn(options || {})
             .then(data => {
@@ -110,7 +110,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             JSON.stringify({ latitude: location.lat, longitude: location.long }), { retain: true })
                             .then(() => logger.warn('Published location to topic.', { topic }));
                     }
-
+                    // TODO
                     if (diagnostics) {
                         logger.log('Received diagnostics!')
                     }
