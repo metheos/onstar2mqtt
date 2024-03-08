@@ -112,7 +112,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     }
                     // TODO
                     if (diagnostics) {
-                        logger.log('Received diagnostics!')
+                        logger.info('Received diagnostics!')
                     }
                 }
             })
@@ -149,6 +149,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
 
 };
 
+logger.info('Starting OnStar2MQTT Polling');
 (async () => {
     try {
         const commands = init();
