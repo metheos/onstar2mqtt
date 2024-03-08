@@ -89,18 +89,19 @@ const configureMQTT = async (commands, client, mqttHA) => {
         }
         const commandFn = cmd.bind(commands);
         logger.warn('Command sent:', { command });
-        //logger.info('Command Status Topic:', commandStatusTopic);
+        logger.info('Command Status Topic1:', commandStatusTopic);
         client.publish(commandStatusTopic, JSON.stringify({ "Command": "Sent" }), { retain: true });
         commandFn(options || {})
             .then(data => {
                 // TODO refactor the response handling for commands - Partially Done!
                 logger.warn('Command completed:', { command });
-                logger.warn('Command Status Topic:', commandStatusTopic);
+                logger.warn('Command Status Topic2:', commandStatusTopic);
                 client.publish(commandStatusTopic, JSON.stringify({ "Command": "Completed Successfully" }), { retain: true });
                 const responseData = _.get(data, 'response.data');
                 if (responseData) {
                     logger.warn('Command response data:', { responseData });
                     const location = _.get(data, 'response.data.commandResponse.body.location');
+                    const diagnostics = _.get(data, 'response.data.commandResponse.body.diagnosticResponse');
                     if (location) {
                         const topic = mqttHA.getStateTopic({ name: command });
                         // TODO create device_tracker entity. MQTT device tracker doesn't support lat/lon and mqtt_json
@@ -109,34 +110,11 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             JSON.stringify({ latitude: location.lat, longitude: location.long }), { retain: true })
                             .then(() => logger.warn('Published location to topic.', { topic }));
                     }
-                    const diagnostics = _.get(data, 'response.data.commandResponse.body.diagnosticResponse');
+                    
                     if (diagnostics) {
-                        //const configurations = new Map();
-                        async () => {
-                            const vehicle = await getCurrentVehicle(commands);
-                            const states = new Map();
-                            const v = vehicle;
-                            //logger.info('Requesting diagnostics');
-                            const statsRes = await commands.diagnostics({diagnosticItem: v.getSupported()});
-                            //logger.info('Diagnostic request status', {status: _.get(statsRes, 'status')});
-                            const stats = _.map(
-                                _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse'),
-                                d => new Diagnostic(d)
-                            );
-                            logger.debug('Diagnostic request response', {stats: _.map(stats, s => s.toString())});
-                
-                            const publishes = [];
-                            // update sensor states
-                            for (let [topic, state] of states) {
-                                logger.warn('Publishing message:', {topic, state});
-                                publishes.push(
-                                    client.publish(topic, JSON.stringify(state), {retain: true})
-                                );
-                            }
-                            await Promise.all(publishes);
-                
+                        logger.log('Received diagnostics!')
                     }
-                }}
+                }
             })
             //.catch((err)=> {logger.error('Command error', {command, err})            
             //logger.info(commandStatusTopic);
@@ -145,8 +123,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 if (e instanceof Error) {
                     const errorPayload = {
                         error: _.pick(e, [
-                            'message',
-                            'stack',
+                            'message',                            
                             'response.status',
                             'response.statusText',
                             'response.headers',
@@ -155,12 +132,13 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             'request.body',
                             'request.contentType',
                             'request.headers',
-                            'request.url'
+                            'request.url',
+                            'stack'
                         ])
                     };
                     //const errorJson = JSON.stringify(errorPayload);
-                    logger.error('Command Error!', { command, errorPayload });
-                    //logger.info('Command Status Topic:', commandStatusTopic);
+                    logger.error('Command Error!', { command, error: errorPayload });
+                    logger.info('Command Status Topic3:', commandStatusTopic);
                     client.publish(commandStatusTopic, JSON.stringify({ "Command": errorPayload }), { retain: true });
                 }
             });
@@ -189,12 +167,13 @@ const configureMQTT = async (commands, client, mqttHA) => {
             const v = vehicle;
             logger.info('Requesting diagnostics');
             const statsRes = await commands.diagnostics({diagnosticItem: v.getSupported()});
+            logger.debug(statsRes);
             logger.info('Diagnostic request status', {status: _.get(statsRes, 'status')});
             const stats = _.map(
                 _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse'),
                 d => new Diagnostic(d)
             );
-            logger.debug('Diagnostic request response', {stats: _.map(stats, s => s.toString())});
+            logger.debug('Diagnostic request response:', {stats: _.map(stats, s => s.toString())});
 
             for (const s of stats) {
                 if (!s.hasElements()) {
@@ -248,8 +227,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 if (e instanceof Error) {
                   const errorPayload = {
                     error: _.pick(e, [
-                      'message',
-                      'stack',
+                      'message',                      
                       'response.status',
                       'response.statusText',
                       'response.headers',
@@ -258,14 +236,15 @@ const configureMQTT = async (commands, client, mqttHA) => {
                       'request.body',
                       'request.contentType',
                       'request.headers',
-                      'request.url'
+                      'request.url',
+                      'stack'
                     ])
                   };
                   const errorJson = JSON.stringify(errorPayload);
                   const topicArray = _.concat(mqttConfig.pollingStatusTopic,'/','state');        
                   const pollingStatusTopicState = topicArray.map(item => item.topic || item).join('');
                   client.publish(pollingStatusTopicState, errorJson, {retain: false});
-                  logger.error('Error:', {error: errorPayload});
+                  logger.error('Error Polling Data:', {error: errorPayload});
                   const topicArrayTF = _.concat(mqttConfig.pollingStatusTopic,'/','lastpollsuccessful');        
                   const pollingStatusTopicTF = topicArrayTF.map(item => item.topic || item).join('');
                   client.publish(pollingStatusTopicTF, "false", {retain: false})
@@ -275,7 +254,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     const topicArray = _.concat(mqttConfig.pollingStatusTopic,'/','state');        
                     const pollingStatusTopicState = topicArray.map(item => item.topic || item).join('');
                     client.publish(pollingStatusTopicState, errorJson, {retain: false});
-                    logger.error('Error:', {error: e});
+                    logger.error('Error Polling Data:', {error: e});
                     const topicArrayTF = _.concat(mqttConfig.pollingStatusTopic,'/','lastpollsuccessful');        
                     const pollingStatusTopicTF = topicArrayTF.map(item => item.topic || item).join('');
                     client.publish(pollingStatusTopicTF, "false", {retain: false})
@@ -285,6 +264,6 @@ const configureMQTT = async (commands, client, mqttHA) => {
         await main();
         setInterval(main, onstarConfig.refreshInterval);
     } catch (e) {
-        logger.error('Main function error.', {error: e});
+        logger.error('Main function error:', {error: e});
     }
 })();
