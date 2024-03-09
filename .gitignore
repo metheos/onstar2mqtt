@@ -1,6 +1,6 @@
 .idea/
 .nyc_output/
 node_modules/
-
+.tmp
 onstar2mqtt.env
 .env*
