@@ -3,14 +3,20 @@
         "Buildx",
         "CODACY",
         "DEVICEID",
+        "enginerpm",
         "eyeroll",
         "homeassistant",
+        "HOTSPOT",
         "INTERM",
+        "lastpollsuccessful",
         "lcov",
+        "MIDPEAK",
         "MPGE",
         "mqtts",
+        "OFFPEAK",
         "onstar",
         "onstarjs",
+        "PHEV",
         "uuidv"
     ]
 }

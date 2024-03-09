@@ -88,60 +88,123 @@ const configureMQTT = async (commands, client, mqttHA) => {
             return;
         }
         const commandFn = cmd.bind(commands);
-        logger.warn('Command sent:', { command });
-        logger.warn('Command Status Topic:', { commandStatusTopic });
-        client.publish(commandStatusTopic, JSON.stringify({ "Command": "Sent" }), { retain: true });
-        commandFn(options || {})
-            .then(data => {
-                // TODO refactor the response handling for commands - Partially Done!
-                logger.warn('Command completed:', { command });
-                logger.warn('Command Status Topic:', { commandStatusTopic });
-                client.publish(commandStatusTopic, JSON.stringify({ "Command": "Completed Successfully" }), { retain: true });
-                const responseData = _.get(data, 'response.data');
-                if (responseData) {
-                    logger.warn('Command response data:', { responseData });
-                    const location = _.get(data, 'response.data.commandResponse.body.location');
-                    const diagnostics = _.get(data, 'response.data.commandResponse.body.diagnosticResponse');
-                    if (location) {
-                        const topic = mqttHA.getStateTopic({ name: command });
-                        // TODO create device_tracker entity. MQTT device tracker doesn't support lat/lon and mqtt_json
-                        // doesn't have discovery
-                        client.publish(topic,
-                            JSON.stringify({ latitude: location.lat, longitude: location.long }), { retain: true })
-                            .then(() => logger.warn('Published location to topic.', { topic }));
+        logger.debug('List of const', { command, cmd, commandFn, options });
+        if (command === 'diagnostics' || command === 'enginerpm') {
+            logger.warn('Command sent:', { command });
+            logger.warn('Command Status Topic:', { commandStatusTopic });
+            client.publish(commandStatusTopic, JSON.stringify({ "Command": "Sent" }), { retain: true });
+            (async () => {
+                const states = new Map();
+                const statsRes = await commands[command]({ command });
+                logger.debug({ statsRes });
+                logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });
+                logger.debug('Diagnostic Response Body from Command', statsRes.response.data.commandResponse.body.diagnosticResponse);
+                // Make sure the response is always an array
+                const diagnosticResponses = _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse');
+                const diagArray = Array.isArray(diagnosticResponses) ? diagnosticResponses : [diagnosticResponses];
+                const stats = _.map(
+                    diagArray,
+                    (d, index) => {
+                        logger.debug('Diagnostic Array', { ...d, number: index + 1 });
+                        return new Diagnostic({ ...d, number: index + 1 });
                     }
-                    // TODO
-                    if (diagnostics) {
-                        logger.info('Received diagnostics!')
+                );
+                logger.debug('stats', stats);
+                logger.debug('Diagnostic request response:', { stats: _.map(stats, s => s.toString()) });
+                for (const s of stats) {
+                    // configure once, then set or update states
+                    for (const d of s.diagnosticElements) {
+                        mqttHA.getConfigTopic(d);
+                        mqttHA.getConfigPayload(s, d);
                     }
+                    const topic = mqttHA.getStateTopic(s);
+                    const payload = mqttHA.getStatePayload(s);
+                    states.set(topic, payload);
                 }
-            })
-            //.catch((err)=> {logger.error('Command error', {command, err})            
-            //logger.info(commandStatusTopic);
-            //client.publish(commandStatusTopic, CircularJSON.stringify({"Command": err}), {retain: true})});
-            .catch((e) => {
-                if (e instanceof Error) {
-                    const errorPayload = {
-                        error: _.pick(e, [
-                            'message',
-                            'response.status',
-                            'response.statusText',
-                            'response.headers',
-                            'response.data',
-                            'request.method',
-                            'request.body',
-                            'request.contentType',
-                            'request.headers',
-                            'request.url',
-                            'stack'
-                        ])
-                    };
-                    //const errorJson = JSON.stringify(errorPayload);
-                    logger.error('Command Error!', { command, error: errorPayload });
-                    logger.error('Command Status Topic for Errored Command:', { commandStatusTopic });
-                    client.publish(commandStatusTopic, JSON.stringify({ "Command": errorPayload }), { retain: true });
+                const publishes = [];
+                for (let [topic, state] of states) {
+                    logger.info('Publishing message:', { topic, state });
+                    publishes.push(
+                        client.publish(topic, JSON.stringify(state), { retain: true })
+                    );
                 }
-            });
+                await Promise.all(publishes);
+            })()
+                .catch((e) => {
+                    if (e instanceof Error) {
+                        const errorPayload = {
+                            error: _.pick(e, [
+                                'message',
+                                'response.status',
+                                'response.statusText',
+                                'response.headers',
+                                'response.data',
+                                'request.method',
+                                'request.body',
+                                'request.contentType',
+                                'request.headers',
+                                'request.url',
+                                'stack'
+                            ])
+                        };
+                        //const errorJson = JSON.stringify(errorPayload);
+                        logger.error('Command Error!', { command, error: errorPayload });
+                        logger.error('Command Status Topic for Errored Command:', { commandStatusTopic });
+                        client.publish(commandStatusTopic, JSON.stringify({ "Command": errorPayload }), { retain: true });
+                    }
+                })
+        }
+        else {
+            logger.warn('Command sent:', { command });
+            logger.warn('Command Status Topic:', { commandStatusTopic });
+            client.publish(commandStatusTopic, JSON.stringify({ "Command": "Sent" }), { retain: true });
+            commandFn(options || {})
+                .then(data => {
+                    // refactor the response handling for commands - Done!
+                    logger.warn('Command completed:', { command });
+                    logger.warn('Command Status Topic:', { commandStatusTopic });
+                    client.publish(commandStatusTopic, JSON.stringify({ "Command": { "error": { "message": "Completed Successfully", "response": { "status": 0, "statusText": "Completed Successfully" } } } }), { retain: true });
+                    const responseData = _.get(data, 'response.data');
+                    if (responseData) {
+                        logger.warn('Command response data:', { responseData });
+                        const location = _.get(data, 'response.data.commandResponse.body.location');
+                        if (location) {
+                            const topic = mqttHA.getStateTopic({ name: command });
+                            // TODO create device_tracker entity. MQTT device tracker doesn't support lat/lon and mqtt_json
+                            // doesn't have discovery
+                            client.publish(topic,
+                                JSON.stringify({ latitude: location.lat, longitude: location.long }), { retain: true })
+                                .then(() => logger.warn('Published location to topic.', { topic }));
+                        }
+                    }
+                })
+                //.catch((err)=> {logger.error('Command error', {command, err})            
+                //logger.info(commandStatusTopic);
+                //client.publish(commandStatusTopic, CircularJSON.stringify({"Command": err}), {retain: true})});
+                .catch((e) => {
+                    if (e instanceof Error) {
+                        const errorPayload = {
+                            error: _.pick(e, [
+                                'message',
+                                'response.status',
+                                'response.statusText',
+                                'response.headers',
+                                'response.data',
+                                'request.method',
+                                'request.body',
+                                'request.contentType',
+                                'request.headers',
+                                'request.url',
+                                'stack'
+                            ])
+                        };
+                        //const errorJson = JSON.stringify(errorPayload);
+                        logger.error('Command Error!', { command, error: errorPayload });
+                        logger.error('Command Status Topic for Errored Command:', { commandStatusTopic });
+                        client.publish(commandStatusTopic, JSON.stringify({ "Command": errorPayload }), { retain: true });
+                    }
+                });
+        }
     });
     const topic = mqttHA.getCommandTopic();
     logger.info('Subscribed to command topic:', { topic });
@@ -149,7 +212,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
 
 };
 
-logger.info('Starting OnStar2MQTT Polling');
+logger.info('Starting OnStar MQTT Polling');
 (async () => {
     try {
         const commands = init();
@@ -168,7 +231,6 @@ logger.info('Starting OnStar2MQTT Polling');
             const v = vehicle;
             logger.info('Requesting diagnostics');
             const statsRes = await commands.diagnostics({ diagnosticItem: v.getSupported() });
-            logger.debug(statsRes);
             logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });
             const stats = _.map(
                 _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse'),
