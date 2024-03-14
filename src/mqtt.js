@@ -98,6 +98,10 @@ class MQTT {
         return `${this.prefix}/${this.instance}/command`;
     }
 
+    getPollingStatusTopic() {
+        return `${this.prefix}/${this.instance}/polling_status`;
+    }
+
     /**
      *
      * @param {DiagnosticElement} diag

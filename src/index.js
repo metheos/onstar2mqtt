@@ -61,7 +61,7 @@ const mqttConfig = {
 const mqttRequiredProperties = {
     username: 'MQTT_USERNAME',
     password: 'MQTT_PASSWORD',
-    pollingStatusTopic: 'MQTT_ONSTAR_POLLING_STATUS_TOPIC'
+    //pollingStatusTopic: 'MQTT_ONSTAR_POLLING_STATUS_TOPIC'
 };
 
 for (let prop in mqttRequiredProperties) {
@@ -121,7 +121,7 @@ const connectMQTT = async availabilityTopic => {
 
     const client = await mqtt.connectAsync(url, config);
     logger.info('Connected to MQTT!');
-    return client; 
+    return client;
 }
 
 const configureMQTT = async (commands, client, mqttHA) => {
@@ -278,12 +278,26 @@ logger.info('Starting OnStar2MQTT Polling');
 
         const configurations = new Map();
         const run = async () => {
-            const topicArray = _.concat(mqttConfig.pollingStatusTopic, '/', 'state');
+            let topicArray;
+            if (!mqttConfig.pollingStatusTopic) {
+                topicArray = _.concat(mqttHA.getPollingStatusTopic(), '/', 'state');
+            } else {
+                topicArray = _.concat(mqttConfig.pollingStatusTopic, '/', 'state');
+            }
             const pollingStatusTopicState = topicArray.map(item => item.topic || item).join('');
+            logger.info( 'pollingStatusTopicState', { pollingStatusTopicState } );
             client.publish(pollingStatusTopicState, JSON.stringify({ "error": { "message": "Pending Initialization of OnStar2MQTT", "response": { "status": -2000, "statusText": "Pending Initialization of OnStar2MQTT" } } }), { retain: false })
-            const topicArrayTF = _.concat(mqttConfig.pollingStatusTopic, '/', 'lastpollsuccessful');
+
+            let topicArrayTF;
+            if (!mqttConfig.pollingStatusTopic) {
+                topicArrayTF = _.concat(mqttHA.getPollingStatusTopic(), '/', 'lastpollsuccessful');
+            } else {
+                topicArrayTF = _.concat(mqttConfig.pollingStatusTopic, '/', 'lastpollsuccessful');
+            }
             const pollingStatusTopicTF = topicArrayTF.map(item => item.topic || item).join('');
+            logger.info( 'pollingStatusTopicTF', { pollingStatusTopicTF } );
             client.publish(pollingStatusTopicTF, "false", { retain: true });
+
             const states = new Map();
             const v = vehicle;
             logger.info('Requesting diagnostics');
@@ -340,10 +354,24 @@ logger.info('Starting OnStar2MQTT Polling');
 
             .then(() => logger.info('Updates complete, sleeping.'))
             .catch((e) => {
-                const topicArray = _.concat(mqttConfig.pollingStatusTopic, '/', 'state');
+                let topicArray;
+                if (!mqttConfig.pollingStatusTopic) {
+                    topicArray = _.concat(mqttHA.getPollingStatusTopic(), '/', 'state');
+                } else {
+                    topicArray = _.concat(mqttConfig.pollingStatusTopic, '/', 'state');
+                }
                 const pollingStatusTopicState = topicArray.map(item => item.topic || item).join('');
-                const topicArrayTF = _.concat(mqttConfig.pollingStatusTopic, '/', 'lastpollsuccessful');
+                logger.debug( 'pollingStatusTopicState', { pollingStatusTopicState } );
+
+                let topicArrayTF;
+                if (!mqttConfig.pollingStatusTopic) {
+                    topicArrayTF = _.concat(mqttHA.getPollingStatusTopic(), '/', 'lastpollsuccessful');
+                } else {
+                    topicArrayTF = _.concat(mqttConfig.pollingStatusTopic, '/', 'lastpollsuccessful');
+                }
                 const pollingStatusTopicTF = topicArrayTF.map(item => item.topic || item).join('');
+                logger.debug( 'pollingStatusTopicTF', { pollingStatusTopicTF } );
+
                 if (e instanceof Error) {
                     const errorPayload = {
                         error: _.pick(e, [

@@ -3,4 +3,4 @@
 node_modules/
 .tmp
 onstar2mqtt.env
-.env*
+*.env*
