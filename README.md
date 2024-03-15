@@ -25,8 +25,15 @@ Collect the following information:
     1. **NEW! - Provide MQTT topic (MQTT_ONSTAR_POLLING_STATUS_TOPIC) for Onstar Data Polling Status to monitor success/failure when OnStar is polled for data**
        * MQTT_ONSTAR_POLLING_STATUS_TOPIC/lastpollsuccessful - "true" or "false" depending on status of last poll
        * MQTT_ONSTAR_POLLING_STATUS_TOPIC/state - Polling Status and Detailed Error Messages in JSON
+       * **NEW! - Automatic creation of pollingStatusTopic starting at v1.11.0**
+         * No longer need to specify MQTT_ONSTAR_POLLING_STATUS_TOPIC as this is now created automatically
+         * Format is "homeassistant/(VIN)/polling_status/"
+         * If it is explicitly specified, will use the specified value, so does not break backwards compatibility
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
+* **NEW - Ability to dynamically change polling frequency using MQTT**
+  * Uses the value from "ONSTAR_REFRESH" on initial startup
+  * Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an INT to: "homeassistant/(VIN)/refresh_interval"
 
 * **NEW - Command Response Status is now published to MQTT topics!**
   * Topic format: MQTT_PREFIX/{VIN}/command/{commandName}/state
