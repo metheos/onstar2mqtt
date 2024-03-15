@@ -102,6 +102,10 @@ class MQTT {
         return `${this.prefix}/${this.instance}/polling_status`;
     }
 
+    getRefreshIntervalTopic() {
+        return `${this.prefix}/${this.instance}/refresh_interval`;
+    }
+
     /**
      *
      * @param {DiagnosticElement} diag
