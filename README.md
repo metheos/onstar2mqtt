@@ -47,6 +47,12 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 
 * **NEW - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set "--env LOG_LEVEL=debug"**
 
+* **NEW - New env options for securing connectivity for MQTTS using TLS**
+    * MQTT_REJECT_UNAUTHORIZED (Default: "true", set to "false" only for testing.)
+    * MQTT_CA_FILE
+    * MQTT_CERT_FILE
+    * MQTT_KEY_FILE
+
 ## Helpful Usage Notes
 
 * The OnStar API has rate limiting, so they will block excessive requests over a short period of time.
