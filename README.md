@@ -34,6 +34,7 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 * **NEW - Ability to dynamically change polling frequency using MQTT**
   * Uses the value from "ONSTAR_REFRESH" on initial startup
   * Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an INT to: "homeassistant/(VIN)/refresh_interval"
+  * Added new retained topic of "homeassistant/(VIN)/refresh_interval_current_val" to monitor current refresh value set via MQTT
 
 * **NEW - Command Response Status is now published to MQTT topics!**
   * Topic format: MQTT_PREFIX/{VIN}/command/{commandName}/state
@@ -52,6 +53,10 @@ Supply these values to the ENV vars below. The default data refresh interval is 
     * MQTT_CA_FILE
     * MQTT_CERT_FILE
     * MQTT_KEY_FILE
+ 
+* **NEW - Auto discovery for device_tracker has been enabled starting at v1.12.0**
+    * The device_tracker auto discovery config is published to: "homeassistant/device_tracker/(VIN)/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/(VIN)/getlocation/state"
+    * Also added GPS based speed and direction to the device_tracker attributes
 
 ## Helpful Usage Notes
 
