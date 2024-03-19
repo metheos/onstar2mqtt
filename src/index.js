@@ -165,18 +165,16 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 }), { retain: true });
             (async () => {
                 const states = new Map();
-                //const statsRes = await commands[command]({ diagnosticItem: options });
-                logger.warn(`Options in async block: ${options}`)
+                logger.debug(`Options in async block: ${options}`)
                 let diagnosticItem;
                 if (options) {
                     diagnosticItem = options.split(',');
                 } else {
                     diagnosticItem = undefined;
                 }
-                logger.warn("Diagnostic Item:", diagnosticItem)
-                //const statsRes = await commands.diagnostics({ diagnosticItem });
+                logger.debug("Diagnostic Item:", diagnosticItem)
                 const statsRes = await commands[command]({ diagnosticItem });
-                logger.debug({ statsRes });
+                //logger.debug({ statsRes });
                 logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });
                 logger.debug('Diagnostic Response Body from Command', statsRes.response.data.commandResponse.body.diagnosticResponse);
                 // Make sure the response is always an array
@@ -399,8 +397,7 @@ logger.info('Starting OnStar2MQTT Polling');
             const v = vehicle;
             logger.info('Requesting diagnostics');
             logger.debug(`GetSupported: ${v.getSupported()}`);
-            const statsRes = await commands.diagnostics({ diagnosticItem: v.getSupported() });
-            //logger.debug("statsRes from try block:", statsRes );
+            const statsRes = await commands.diagnostics({ diagnosticItem: v.getSupported() });            
             logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });
             const stats = _.map(
                 _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse'),
