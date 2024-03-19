@@ -165,7 +165,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 }), { retain: true });
             (async () => {
                 const states = new Map();
-                logger.debug(`Options in async block: ${options}`)
+                logger.debug(`Options in command async block: ${options}`)
                 let diagnosticItem;
                 if (options) {
                     diagnosticItem = options.split(',');
@@ -397,7 +397,7 @@ logger.info('Starting OnStar2MQTT Polling');
             const v = vehicle;
             logger.info('Requesting diagnostics');
             logger.debug(`GetSupported: ${v.getSupported()}`);
-            const statsRes = await commands.diagnostics({ diagnosticItem: v.getSupported() });            
+            const statsRes = await commands.diagnostics({ diagnosticItem: v.getSupported() });
             logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });
             const stats = _.map(
                 _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse'),
