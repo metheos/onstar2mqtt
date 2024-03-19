@@ -165,7 +165,17 @@ const configureMQTT = async (commands, client, mqttHA) => {
                 }), { retain: true });
             (async () => {
                 const states = new Map();
-                const statsRes = await commands[command]({ command });
+                //const statsRes = await commands[command]({ diagnosticItem: options });
+                logger.warn(`Options in async block: ${options}`)
+                let diagnosticItem;
+                if (options) {
+                    diagnosticItem = options.split(',');
+                } else {
+                    diagnosticItem = undefined;
+                }
+                logger.warn("Diagnostic Item:", diagnosticItem)
+                //const statsRes = await commands.diagnostics({ diagnosticItem });
+                const statsRes = await commands[command]({ diagnosticItem });
                 logger.debug({ statsRes });
                 logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });
                 logger.debug('Diagnostic Response Body from Command', statsRes.response.data.commandResponse.body.diagnosticResponse);
@@ -388,7 +398,9 @@ logger.info('Starting OnStar2MQTT Polling');
             const states = new Map();
             const v = vehicle;
             logger.info('Requesting diagnostics');
+            logger.debug(`GetSupported: ${v.getSupported()}`);
             const statsRes = await commands.diagnostics({ diagnosticItem: v.getSupported() });
+            //logger.debug("statsRes from try block:", statsRes );
             logger.info('Diagnostic request status', { status: _.get(statsRes, 'status') });
             const stats = _.map(
                 _.get(statsRes, 'response.data.commandResponse.body.diagnosticResponse'),
