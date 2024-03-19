@@ -146,13 +146,22 @@ const configureMQTT = async (commands, client, mqttHA) => {
         const commandStatusTopic = topicArray.map(item => item.topic || item).join('');
 
         const commandFn = cmd.bind(commands);
-        logger.debug(`List of const: ${command}, ${cmd}, ${commandFn.toString()}, ${options}`);
+        logger.debug(`List of const: Command: ${command}, cmd: ${cmd}, commandFn: ${commandFn.toString()}, options: ${options}`);
         if (command === 'diagnostics' || command === 'enginerpm') {
             logger.warn('Command sent:', { command });
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusTopic,
                 JSON.stringify({
-                    "Command": "Sent"
+                    "Command": {
+                        "error": {
+                            "message": "Sent",
+                            "response": {
+                                "status": 0,
+                                "statusText": "Sent"
+                            }
+                        }
+                    },
+                    "completionTimestamp": new Date().toISOString()
                 }), { retain: true });
             (async () => {
                 const states = new Map();
@@ -226,7 +235,16 @@ const configureMQTT = async (commands, client, mqttHA) => {
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusTopic,
                 JSON.stringify({
-                    "Command": "Sent"
+                    "Command": {
+                        "error": {
+                            "message": "Sent",
+                            "response": {
+                                "status": 0,
+                                "statusText": "Sent"
+                            }
+                        }
+                    },
+                    "completionTimestamp": new Date().toISOString()
                 }), { retain: true });
             commandFn(options || {})
                 .then(data => {
