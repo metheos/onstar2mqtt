@@ -57,6 +57,12 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 * **NEW - Auto discovery for device_tracker has been enabled starting at v1.12.0**
     * The device_tracker auto discovery config is published to: "homeassistant/device_tracker/(VIN)/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/(VIN)/getlocation/state"
     * Also added GPS based speed and direction to the device_tracker attributes
+ 
+* **NEW - Ability to send commands with options using MQTT now works**
+    * Send commands to the command topic in the format:
+      * {"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}
+      * {"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}
+      * {"command": "alert","options": {"action": "Flash"}}
 
 ## Helpful Usage Notes
 
