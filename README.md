@@ -31,6 +31,7 @@ Collect the following information:
          * If it is explicitly specified, will use the specified value, so does not break backwards compatibility
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
+
 * **NEW - Ability to dynamically change polling frequency using MQTT**
   * Uses the value from "ONSTAR_REFRESH" on initial startup
   * Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an INT to: "homeassistant/(VIN)/refresh_interval"
@@ -49,20 +50,20 @@ Supply these values to the ENV vars below. The default data refresh interval is 
 * **NEW - OnStar password/pin and MQTT password are masked by default in the console log output. To see these values in the console log output, set "--env LOG_LEVEL=debug"**
 
 * **NEW - New env options for securing connectivity for MQTTS using TLS**
-    * MQTT_REJECT_UNAUTHORIZED (Default: "true", set to "false" only for testing.)
-    * MQTT_CA_FILE
-    * MQTT_CERT_FILE
-    * MQTT_KEY_FILE
- 
+  * MQTT_REJECT_UNAUTHORIZED (Default: "true", set to "false" only for testing.)
+  * MQTT_CA_FILE
+  * MQTT_CERT_FILE
+  * MQTT_KEY_FILE
+
 * **NEW - Auto discovery for device_tracker has been enabled starting at v1.12.0**
-    * The device_tracker auto discovery config is published to: "homeassistant/device_tracker/(VIN)/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/(VIN)/getlocation/state"
-    * Also added GPS based speed and direction to the device_tracker attributes
- 
+  * The device_tracker auto discovery config is published to: "homeassistant/device_tracker/(VIN)/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/(VIN)/getlocation/state"
+  * Also added GPS based speed and direction to the device_tracker attributes
+
 * **NEW - Ability to send commands with options using MQTT now works**
-    * Send commands to the command topic in the format:
-      * {"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}
-      * {"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}
-      * {"command": "alert","options": {"action": "Flash"}}
+  * Send commands to the command topic in the format:
+    * {"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}
+    * {"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}
+    * {"command": "alert","options": {"action": "Flash"}}
 
 ## Helpful Usage Notes
 
