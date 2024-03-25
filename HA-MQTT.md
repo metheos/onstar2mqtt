@@ -144,6 +144,8 @@ mode: single
 
 [OnStarJS Command Docs](https://github.com/samrum/OnStarJS#commands)
 
+Commands Implemented in this Program:
+
 1. `getAccountVehicles`
 2. `startVehicle`
 3. `cancelStartVehicle`
@@ -153,13 +155,15 @@ mode: single
 7. `unlockDoor`
 8. `lockTrunk`
 9. `unlockTrunk`
-10. `chargeOverride`
-11. `cancelChargeOverride`
-12. `getLocation`
-13. `alertFlash`
-14. `alertHonk`
-15. `diagnostics`
-16. `enginerpm`
+10. `getChargingProfile`
+11. `setChargingProfile`
+12. `chargeOverride`
+13. `cancelChargeOverride`
+14. `getLocation`
+15. `alertFlash`
+16. `alertHonk`
+17. `diagnostics`
+18. `enginerpm`
 
 ### Lovelace Dashboard
 
