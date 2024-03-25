@@ -27,18 +27,18 @@ Collect the following information:
        * MQTT_ONSTAR_POLLING_STATUS_TOPIC/state - Polling Status and Detailed Error Messages in JSON
        * **NEW! - Automatic creation of pollingStatusTopic starting at v1.11.0**
          * No longer need to specify MQTT_ONSTAR_POLLING_STATUS_TOPIC as this is now created automatically
-         * Format is "homeassistant/(VIN)/polling_status/"
+         * Format is "homeassistant/YOUR_CAR_VIN/polling_status/"
          * If it is explicitly specified, will use the specified value, so does not break backwards compatibility
 
 Supply these values to the ENV vars below. The default data refresh interval is 30 minutes and can be overridden with ONSTAR_REFRESH with values in milliseconds.
 
 * **NEW - Ability to dynamically change polling frequency using MQTT**
   * Uses the value from "ONSTAR_REFRESH" on initial startup
-  * Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an INT to: "homeassistant/(VIN)/refresh_interval"
-  * Added new retained topic of "homeassistant/(VIN)/refresh_interval_current_val" to monitor current refresh value set via MQTT
+  * Change the value dynamically by publishing the new refresh value in milliseconds (ms) as an INT to: "homeassistant/YOUR_CAR_VIN/refresh_interval"
+  * Added new retained topic of "homeassistant/YOUR_CAR_VIN/refresh_interval_current_val" to monitor current refresh value set via MQTT
 
 * **NEW - Command Response Status is now published to MQTT topics!**
-  * Topic format: MQTT_PREFIX/{VIN}/command/{commandName}/state
+  * Topic format: MQTT_PREFIX/YOUR_CAR_VIN/command/{commandName}/state
     * Note: Unless defined, default MQTT_PREFIX=homeassistant
 
 * **NEW - Sensor specific messages are now published to MQTT as sensor attributes which are visible in HA**
@@ -56,7 +56,7 @@ Supply these values to the ENV vars below. The default data refresh interval is 
   * MQTT_KEY_FILE
 
 * **NEW - Auto discovery for device_tracker has been enabled starting at v1.12.0**
-  * The device_tracker auto discovery config is published to: "homeassistant/device_tracker/(VIN)/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/(VIN)/getlocation/state"
+  * The device_tracker auto discovery config is published to: "homeassistant/device_tracker/YOUR_CAR_VIN/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state"
   * Also added GPS based speed and direction to the device_tracker attributes
 
 * **NEW - Ability to send commands with options using MQTT now works**
