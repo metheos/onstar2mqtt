@@ -64,6 +64,11 @@ Supply these values to the ENV vars below. The default data refresh interval is 
     * {"command": "diagnostics","options": "OIL LIFE,VEHICLE RANGE"}
     * {"command": "setChargingProfile","options": {"chargeMode": "RATE_BASED","rateType": "OFFPEAK"}}
     * {"command": "alert","options": {"action": "Flash"}}
+   
+* **NEW - MQTT Button Auto-Discovery for HA Added Starting at v1.14.0**
+    * Buttons are added disabled by default because it's easy to accidentally press the wrong button and trigger an action at an inopportune time. 
+Enable at your own risk and you assume all responsibility for your actions.
+    * All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
 
 ## Helpful Usage Notes
 
