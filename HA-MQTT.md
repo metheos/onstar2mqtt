@@ -127,6 +127,41 @@ mqtt:
       device_class: timestamp
 ```
 
+### MQTT Command Status Monitor
+
+Create a MQTT sensor in Home Assistant for each command status you want to monitor. Below is an example for the getLocation command and other commands follow a similar format.
+
+```yaml
+mqtt:
+  sensor:
+    - name: "Vehicle1 Location Command Status Message"
+      unique_id: vehicle1_location_command_status_message
+      availability_topic: homeassistant/YOUR_CAR_VIN/available
+      payload_available: "false"
+      payload_not_available: "true"
+      state_topic: "homeassistant/YOUR_VEHICLE_VIN/command/getLocation/state"
+      value_template: "{{ value_json.Command.error.message }}"  
+      icon: mdi:message-alert
+```
+
+### MQTT Command Status Timestamp Monitor
+
+Create a MQTT sensor in Home Assistant for each command timestamp you want to monitor. Below is an example for the getLocation command and other commands follow a similar format.
+
+```yaml
+mqtt:
+  sensor:
+    - name: "Vehicle1 Location Command Status Timestamp"
+      unique_id: vehicle1_location_command_status_timestamp
+      availability_topic: homeassistant/YOUR_CAR_VIN/available
+      payload_available: "false"
+      payload_not_available: "true"
+      state_topic: "homeassistant/YOUR_VEHICLE_VIN/command/getLocation/state"
+      value_template: "{{ value_json.completionTimestamp}}"  
+      icon: mdi:calendar-clock  
+      device_class: timestamp
+```
+
 ### Automation
 
 Create an automation to update the location whenever the odometer changes, instead of on a time interval.
