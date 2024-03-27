@@ -522,7 +522,7 @@ logger.info('Starting OnStar2MQTT Polling');
                 // Only run on initial startup
                 if (!buttonConfigsPublished) {
                     // Get supported commands            
-                    logger.info(`Supported Commands: ${v.getSupportedCommands()}`);
+                    logger.debug(`Supported Commands: ${v.getSupportedCommands()}`);
                     // Get button configs and payloads
                     const { buttonConfigs, configPayloads } = mqttHA.createButtonConfigPayload(v);
                     // Publish button config and payload for each button
