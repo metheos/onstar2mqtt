@@ -70,6 +70,8 @@ the discovery schema so a manual entity configuration is required.~~
 
 #### Script YAML
 
+MQTT button auto discovery is enabled starting at v1.14.0, so the following isn't strictly necessary, but still available if needed. 
+
 ```yaml
 alias: Car - Location
 sequence:
