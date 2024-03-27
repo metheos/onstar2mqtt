@@ -13,8 +13,6 @@ class Vehicle {
         );
         this.supportedDiagnostics = _.get(diagCmd,
             'commandData.supportedDiagnostics.supportedDiagnostic');
-
-        this.supportedCommands = _.get(vehicle, 'commands.command');
     }
 
     isSupported(diag) {
@@ -30,13 +28,6 @@ class Vehicle {
 
     toString() {
         return `${this.year} ${this.make} ${this.model}`;
-    }
-
-    getSupportedCommands(commandList = []) {
-        this.supportedCommands.forEach(command => {
-            commandList.push(command.name);
-        });
-        return commandList;
     }
 }
 
