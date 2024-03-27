@@ -62,7 +62,7 @@ the discovery schema so a manual entity configuration is required.~~
 
 ```yaml
 <!-- The following YAML configuration is no longer required starting at v1.12.0-->
-device_tracker:
+#device_tracker:
 #  - platform: mqtt_json
 #    devices:
 #      your_car_name: homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state
