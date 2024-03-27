@@ -38,4 +38,18 @@ describe('Vehicle', () => {
     it('should toString() correctly', () => {
         assert.strictEqual(v.toString(), '2020 Chevrolet Bolt EV')
     });
+
+    it('should return the list of supported commands', () => {
+        const supported = v.getSupportedCommands();
+        assert.ok(_.isArray(supported));
+        assert.strictEqual(supported.length, 29);
+    });
+
+    it('should return the list of supported commands with provided command list', () => {
+        const commandList = [];
+        const supported = v.getSupportedCommands(commandList);
+        assert.ok(_.isArray(supported));
+        assert.strictEqual(supported.length, 29);
+        assert.deepStrictEqual(supported, commandList);
+    });
 });
