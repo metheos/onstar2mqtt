@@ -51,7 +51,7 @@ mode: single
 
 ### Location
 
-MQTT device_tracker auto discovery capability is enabled starting at v1.12.0
+MQTT device_tracker auto discovery capability is enabled starting at v1.12.0. Requires running the locate command for initial setup of the device_tracker entity via auto discovery. 
 
 The device_tracker auto discovery config is published to: "homeassistant/device_tracker/YOUR_CAR_VIN/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state".
 
