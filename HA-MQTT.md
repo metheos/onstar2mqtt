@@ -61,7 +61,7 @@ the discovery schema so a manual entity configuration is required.~~
 ~~Device Tracker YAML:~~
 
 ```yaml
-<!-- The following YAML configuration is no longer required starting at v1.12.0-->
+<!-- The following YAML configuration is no longer required starting at v1.12.0 -->
 #device_tracker:
 #  - platform: mqtt_json
 #    devices:
