@@ -99,7 +99,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     //message: 'na',
@@ -122,7 +122,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     //message: 'na',
@@ -161,7 +161,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     state_class: 'total_increasing',
@@ -183,7 +183,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     state_class: 'total_increasing',
@@ -219,7 +219,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     //message: 'na',                      
@@ -252,7 +252,7 @@ describe('MQTT', () => {
             });
         });
 
-        describe('attributes', () => {
+/*        describe('attributes', () => {
             beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[8]')));
             it('should generate payloads with an attribute', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
@@ -262,7 +262,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     //message: 'YELLOW',
@@ -279,11 +279,86 @@ describe('MQTT', () => {
                     value_template: '{{ value_json.tire_pressure_lf }}'
                 });
             });
-        });
+        }); */
 
         describe('attributes', () => {
             beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[8]')));
-            it('should generate payloads with an attribute', () => {
+            it('should generate payloads with an attribute for left front tire', () => {
+                assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
+                    availability_topic: 'homeassistant/XXX/available',
+                    device: {
+                        identifiers: [
+                            'XXX'
+                        ],
+                        manufacturer: 'foo',
+                        model: '2020 bar',
+                        name: '2020 foo bar'
+                    },
+                    
+                    state_class: 'measurement',
+                    device_class: 'pressure',
+                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_lf_message} | tojson }}",
+                    name: 'Tire Pressure: Left Front',
+                    payload_available: 'true',
+                    payload_not_available: 'false',
+                    state_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
+                    unique_id: 'xxx-tire-pressure-lf',
+                    json_attributes_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
+                    unit_of_measurement: 'kPa',
+                    value_template: '{{ value_json.tire_pressure_lf }}'
+                });
+            });
+            it('should generate payloads with an attribute for right front tire', () => {
+                assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[4]), {
+                    availability_topic: 'homeassistant/XXX/available',
+                    device: {
+                        identifiers: [
+                            'XXX'
+                        ],
+                        manufacturer: 'foo',
+                        model: '2020 bar',
+                        name: '2020 foo bar'
+                    },
+                    
+                    state_class: 'measurement',
+                    device_class: 'pressure',
+                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_rf_message} | tojson }}",
+                    name: 'Tire Pressure: Right Front',
+                    payload_available: 'true',
+                    payload_not_available: 'false',
+                    state_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
+                    unique_id: 'xxx-tire-pressure-rf',
+                    json_attributes_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
+                    unit_of_measurement: 'kPa',
+                    value_template: '{{ value_json.tire_pressure_rf }}'
+                });
+            });
+            it('should generate payloads with an attribute for left rear tire', () => {
+                assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[1]), {
+                    availability_topic: 'homeassistant/XXX/available',
+                    device: {
+                        identifiers: [
+                            'XXX'
+                        ],
+                        manufacturer: 'foo',
+                        model: '2020 bar',
+                        name: '2020 foo bar'
+                    },
+                    
+                    state_class: 'measurement',
+                    device_class: 'pressure',
+                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_lr_message} | tojson }}",
+                    name: 'Tire Pressure: Left Rear',
+                    payload_available: 'true',
+                    payload_not_available: 'false',
+                    state_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
+                    unique_id: 'xxx-tire-pressure-lr',
+                    json_attributes_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
+                    unit_of_measurement: 'kPa',
+                    value_template: '{{ value_json.tire_pressure_lr }}'
+                });
+            });
+            it('should generate payloads with an attribute for right rear tire', () => {
                 assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[5]), {
                     availability_topic: 'homeassistant/XXX/available',
                     device: {
@@ -291,10 +366,10 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
-                    //message: 'YELLOW',
+                    
                     state_class: 'measurement',
                     device_class: 'pressure',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_rr_message} | tojson }}",
@@ -320,7 +395,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     //message: 'YELLOW',
@@ -349,7 +424,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     state_class: 'measurement',
@@ -371,7 +446,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     state_class: 'measurement',
@@ -393,7 +468,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     state_class: 'measurement',
@@ -439,7 +514,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     state_class: 'measurement',
@@ -475,7 +550,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     state_class: 'total_increasing',
@@ -511,7 +586,7 @@ describe('MQTT', () => {
                             'XXX'
                         ],
                         manufacturer: 'foo',
-                        model: 2020,
+                        model: '2020 bar',
                         name: '2020 foo bar'
                     },
                     state_class: undefined,
@@ -536,6 +611,56 @@ describe('MQTT', () => {
             });
         });
 
-
+        describe('createButtonConfigPayload', () => {
+            it('should generate button config payloads', () => {
+                const vehicle = new Vehicle({make: 'foo', model: 'bar', vin: 'XXX', year: 2020});
+                const mqtt = new MQTT(vehicle);
+        
+                const expectedButtonInstances = [];
+                const expectedButtonConfigs = [];
+                const expectedConfigPayloads = [];
+        
+                for (const buttonName in MQTT.CONSTANTS.BUTTONS) {
+                    const buttonConfig = `homeassistant/button/XXX/${MQTT.convertName(buttonName)}/config`;
+                    const button = {
+                        name: buttonName,
+                        config: buttonConfig,
+                        vehicle: vehicle
+                    };
+        
+                    expectedButtonInstances.push(button);
+                    expectedButtonConfigs.push(buttonConfig);
+        
+                    let unique_id = `${vehicle.vin}_Command_${button.name}`;
+                    unique_id = unique_id.replace(/\s+/g, '-').toLowerCase();
+        
+                    expectedConfigPayloads.push({
+                        "device": {
+                            "identifiers": [vehicle.vin],
+                            "manufacturer": vehicle.make,
+                            "model": vehicle.year + ' ' + vehicle.model,
+                            "name": vehicle.toString()
+                        },
+                        "availability": {
+                            "topic": mqtt.getAvailabilityTopic(),
+                            "payload_available": 'true',
+                            "payload_not_available": 'false',
+                        },
+                        "unique_id": unique_id,
+                        "name": `Command ${button.name}`,
+                        "command_topic": mqtt.getCommandTopic(),
+                        "payload_press": JSON.stringify({ "command": MQTT.CONSTANTS.BUTTONS[button.name] }),
+                        "qos": 2,
+                        "enabled_by_default": false,
+                    });
+                }
+        
+                const result = mqtt.createButtonConfigPayload(vehicle);
+                assert.deepStrictEqual(result.buttonInstances, expectedButtonInstances);
+                assert.deepStrictEqual(result.buttonConfigs, expectedButtonConfigs);
+                assert.deepStrictEqual(result.configPayloads, expectedConfigPayloads);
+            });
+        });
+    
     });
 });
