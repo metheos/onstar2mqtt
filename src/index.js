@@ -40,7 +40,7 @@ for (let prop in onstarRequiredProperties) {
 }
 
 if (process.env.LOG_LEVEL === 'debug') {
-    logger.debug(`OnStar Config: ${onstarConfig}`);
+    logger.debug('OnStar Config:', { onstarConfig });
 } else {
     logger.info('OnStar Config:', { onstarConfig: { ...onstarConfig, password: '********', onStarPin: '####' } });
 }
@@ -63,7 +63,7 @@ const mqttConfig = {
 const mqttRequiredProperties = {
     username: 'MQTT_USERNAME',
     password: 'MQTT_PASSWORD',
-    //pollingStatusTopic: 'MQTT_ONSTAR_POLLING_STATUS_TOPIC'
+    //pollingStatusTopic: 'MQTT_ONSTAR_POLLING_STATUS_TOPIC'    # No longer mandatory
 };
 
 for (let prop in mqttRequiredProperties) {
@@ -73,7 +73,7 @@ for (let prop in mqttRequiredProperties) {
 }
 
 if (process.env.LOG_LEVEL === 'debug') {
-    logger.debug(`MQTT Config: ${mqttConfig}`);
+    logger.debug('MQTT Config:', { mqttConfig });
 } else {
     logger.info('MQTT Config:', { mqttConfig: { ...mqttConfig, password: '********', ca: undefined, cert: undefined, key: undefined } });
 }
