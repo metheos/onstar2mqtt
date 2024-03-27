@@ -157,8 +157,8 @@ Commands Implemented in this Program:
 5. `cancelAlert`
 6. `lockDoor`
 7. `unlockDoor`
-8. `lockTrunk`
-9. `unlockTrunk`
+8. `lockTrunk` (only available on some vehicles)
+9. `unlockTrunk` (only available on some vehicles)
 10. `getChargingProfile`
 11. `setChargingProfile`
 12. `chargeOverride`
