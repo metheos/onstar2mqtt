@@ -4,6 +4,8 @@
 
 ### Example Script YAML
 
+MQTT button auto discovery is enabled starting at v1.14.0 which sends/triggers the defaults of each command. The following isn't strictly necessary, but still available if needed or for sending customized commands. 
+
 ```yaml
 alias: Car - Start Vehicle
 sequence:
