@@ -4,7 +4,7 @@
 
 ### Example Script YAML
 
-MQTT button auto discovery is enabled starting at v1.14.0 which sends/triggers the defaults of each command. The following isn't strictly necessary, but still available if needed or for sending customized commands. 
+MQTT button auto discovery is enabled starting at v1.14.0 which sends/triggers the defaults of each command. The following isn't strictly necessary, but still available if needed or for sending customized commands.
 
 ```yaml
 alias: Car - Start Vehicle
@@ -53,7 +53,7 @@ mode: single
 
 ### Location
 
-MQTT device_tracker auto discovery capability is enabled starting at v1.12.0. Requires running the getLocation command for initial setup of the device_tracker entity via auto discovery. 
+MQTT device_tracker auto discovery capability is enabled starting at v1.12.0. Requires running the getLocation command for initial setup of the device_tracker entity via auto discovery.
 
 The device_tracker auto discovery config is published to: "homeassistant/device_tracker/YOUR_CAR_VIN/config" and the GPS coordinates are still read from the original topic automatically at: "homeassistant/device_tracker/YOUR_CAR_VIN/getlocation/state".
 
@@ -72,7 +72,7 @@ the discovery schema so a manual entity configuration is required.~~
 
 #### Script YAML
 
-MQTT button auto discovery is enabled starting at v1.14.0, so the following isn't strictly necessary, but still available if needed. 
+MQTT button auto discovery is enabled starting at v1.14.0, so the following isn't strictly necessary, but still available if needed.
 
 ```yaml
 alias: Car - Location
@@ -97,9 +97,9 @@ mqtt:
       availability_topic: homeassistant/YOUR_CAR_VIN/available
       payload_available: "false"
       payload_not_available: "true"
-      state_topic: "YOUR_POLLLING_STATUS_TOPIC/lastpollsuccessful"
+      state_topic: "YOUR_POLLING_STATUS_TOPIC/lastpollsuccessful"
       # NOTE: If "MQTT_ONSTAR_POLLING_STATUS_TOPIC" is not explicitly set,
-      #       "YOUR_POLLLING_STATUS_TOPIC" defaults to "homeassistant/YOUR_CAR_VIN/polling_status/".
+      #       "YOUR_POLLING_STATUS_TOPIC" defaults to "homeassistant/YOUR_CAR_VIN/polling_status/".
       #       If set, provide whatever value you set it to in this field.
       payload_on: "false"
       payload_off: "true"
@@ -118,9 +118,9 @@ mqtt:
       availability_topic: homeassistant/YOUR_CAR_VIN/available
       payload_available: "false"
       payload_not_available: "true"
-      state_topic: "YOUR_POLLLING_STATUS_TOPIC/state"
+      state_topic: "YOUR_POLLING_STATUS_TOPIC/state"
       # NOTE: If "MQTT_ONSTAR_POLLING_STATUS_TOPIC" is not explicitly set,
-      #       "YOUR_POLLLING_STATUS_TOPIC" defaults to "homeassistant/YOUR_CAR_VIN/polling_status/".
+      #       "YOUR_POLLING_STATUS_TOPIC" defaults to "homeassistant/YOUR_CAR_VIN/polling_status/".
       #       If set, provide whatever value you set it to in this field.
       value_template: "{{ value_json.completionTimestamp }}"  
       icon: mdi:calendar-clock  

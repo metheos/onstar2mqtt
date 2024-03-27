@@ -24,7 +24,7 @@
             },
             {
               "name": "getHotspotInfo",
-              "description": "Retrives the WiFi Hotspot info",
+              "description": "Retrieves the WiFi Hotspot info",
               "url": "https://api.gm.com/api/v1/account/vehicles/foobarVIN/hotspot/commands/getInfo",
               "isPrivSessionRequired": "false"
             },
@@ -154,7 +154,7 @@
             },
             {
               "name": "getHotspotStatus",
-              "description": "Retrive WiFi status",
+              "description": "Retrieve WiFi status",
               "url": "https://api.gm.com/api/v1/account/vehicles/foobarVIN/hotspot/commands/getStatus",
               "isPrivSessionRequired": "false"
             },

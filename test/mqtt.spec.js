@@ -8,7 +8,7 @@ const apiResponse = require('./diagnostic.sample.json');
 
 describe('MQTT', () => {
     let mqtt;
-    let vehicle = new Vehicle({make: 'foo', model: 'bar', vin: 'XXX', year: 2020});
+    let vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
     beforeEach(() => mqtt = new MQTT(vehicle));
 
     it('should set defaults', () => {
@@ -252,34 +252,34 @@ describe('MQTT', () => {
             });
         });
 
-/*        describe('attributes', () => {
-            beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[8]')));
-            it('should generate payloads with an attribute', () => {
-                assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
-                    availability_topic: 'homeassistant/XXX/available',
-                    device: {
-                        identifiers: [
-                            'XXX'
-                        ],
-                        manufacturer: 'foo',
-                        model: '2020 bar',
-                        name: '2020 foo bar'
-                    },
-                    //message: 'YELLOW',
-                    state_class: 'measurement',
-                    device_class: 'pressure',
-                    json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_lf_message} | tojson }}",
-                    name: 'Tire Pressure: Left Front',
-                    payload_available: 'true',
-                    payload_not_available: 'false',
-                    state_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
-                    unique_id: 'xxx-tire-pressure-lf',
-                    json_attributes_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
-                    unit_of_measurement: 'kPa',
-                    value_template: '{{ value_json.tire_pressure_lf }}'
-                });
-            });
-        }); */
+        /*        describe('attributes', () => {
+                    beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[8]')));
+                    it('should generate payloads with an attribute', () => {
+                        assert.deepStrictEqual(mqtt.getConfigPayload(d, d.diagnosticElements[0]), {
+                            availability_topic: 'homeassistant/XXX/available',
+                            device: {
+                                identifiers: [
+                                    'XXX'
+                                ],
+                                manufacturer: 'foo',
+                                model: '2020 bar',
+                                name: '2020 foo bar'
+                            },
+                            //message: 'YELLOW',
+                            state_class: 'measurement',
+                            device_class: 'pressure',
+                            json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_lf_message} | tojson }}",
+                            name: 'Tire Pressure: Left Front',
+                            payload_available: 'true',
+                            payload_not_available: 'false',
+                            state_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
+                            unique_id: 'xxx-tire-pressure-lf',
+                            json_attributes_topic: 'homeassistant/sensor/XXX/tire_pressure/state',
+                            unit_of_measurement: 'kPa',
+                            value_template: '{{ value_json.tire_pressure_lf }}'
+                        });
+                    });
+                }); */
 
         describe('attributes', () => {
             beforeEach(() => d = new Diagnostic(_.get(apiResponse, 'commandResponse.body.diagnosticResponse[8]')));
@@ -294,7 +294,7 @@ describe('MQTT', () => {
                         model: '2020 bar',
                         name: '2020 foo bar'
                     },
-                    
+
                     state_class: 'measurement',
                     device_class: 'pressure',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_lf_message} | tojson }}",
@@ -319,7 +319,7 @@ describe('MQTT', () => {
                         model: '2020 bar',
                         name: '2020 foo bar'
                     },
-                    
+
                     state_class: 'measurement',
                     device_class: 'pressure',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_front, 'message': value_json.tire_pressure_rf_message} | tojson }}",
@@ -344,7 +344,7 @@ describe('MQTT', () => {
                         model: '2020 bar',
                         name: '2020 foo bar'
                     },
-                    
+
                     state_class: 'measurement',
                     device_class: 'pressure',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_lr_message} | tojson }}",
@@ -369,7 +369,7 @@ describe('MQTT', () => {
                         model: '2020 bar',
                         name: '2020 foo bar'
                     },
-                    
+
                     state_class: 'measurement',
                     device_class: 'pressure',
                     json_attributes_template: "{{ {'recommendation': value_json.tire_pressure_placard_rear, 'message': value_json.tire_pressure_rr_message} | tojson }}",
@@ -613,13 +613,13 @@ describe('MQTT', () => {
 
         describe('createButtonConfigPayload', () => {
             it('should generate button config payloads', () => {
-                const vehicle = new Vehicle({make: 'foo', model: 'bar', vin: 'XXX', year: 2020});
+                const vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
                 const mqtt = new MQTT(vehicle);
-        
+
                 const expectedButtonInstances = [];
                 const expectedButtonConfigs = [];
                 const expectedConfigPayloads = [];
-        
+
                 for (const buttonName in MQTT.CONSTANTS.BUTTONS) {
                     const buttonConfig = `homeassistant/button/XXX/${MQTT.convertName(buttonName)}/config`;
                     const button = {
@@ -627,13 +627,13 @@ describe('MQTT', () => {
                         config: buttonConfig,
                         vehicle: vehicle
                     };
-        
+
                     expectedButtonInstances.push(button);
                     expectedButtonConfigs.push(buttonConfig);
-        
+
                     let unique_id = `${vehicle.vin}_Command_${button.name}`;
                     unique_id = unique_id.replace(/\s+/g, '-').toLowerCase();
-        
+
                     expectedConfigPayloads.push({
                         "device": {
                             "identifiers": [vehicle.vin],
@@ -654,13 +654,13 @@ describe('MQTT', () => {
                         "enabled_by_default": false,
                     });
                 }
-        
+
                 const result = mqtt.createButtonConfigPayload(vehicle);
                 assert.deepStrictEqual(result.buttonInstances, expectedButtonInstances);
                 assert.deepStrictEqual(result.buttonConfigs, expectedButtonConfigs);
                 assert.deepStrictEqual(result.configPayloads, expectedConfigPayloads);
             });
         });
-    
+
     });
 });
