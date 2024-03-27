@@ -154,7 +154,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusTopic,
                 JSON.stringify({
-                    "Command": {
+                    "command": {
                         "error": {
                             "message": "Sent",
                             "response": {
@@ -234,7 +234,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                         logger.error(`Command Status Topic for Errored Command: ${commandStatusTopic}`);
                         client.publish(commandStatusTopic,
                             JSON.stringify({
-                                "Command": errorPayload,
+                                "command": errorPayload,
                                 "completionTimestamp": completionTimestamp
                             }), { retain: true });
                     }
@@ -285,7 +285,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusTopic,
                 JSON.stringify({
-                    "Command": {
+                    "command": {
                         "error": {
                             "message": "Sent",
                             "response": {
@@ -308,7 +308,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     client.publish(
                         commandStatusTopic,
                         JSON.stringify({
-                            "Command": {
+                            "command": {
                                 "error": {
                                     "message": "Completed Successfully",
                                     "response": {
@@ -352,7 +352,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                         logger.error(`Command Status Topic for Errored Command: ${commandStatusTopic}`);
                         client.publish(commandStatusTopic,
                             JSON.stringify({
-                                "Command": errorPayload,
+                                "command": errorPayload,
                                 "completionTimestamp": completionTimestamp
                             }), { retain: true });
                     }
@@ -363,7 +363,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusTopic,
                 JSON.stringify({
-                    "Command": {
+                    "command": {
                         "error": {
                             "message": "Sent",
                             "response": {
@@ -384,7 +384,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                     client.publish(
                         commandStatusTopic,
                         JSON.stringify({
-                            "Command": {
+                            "command": {
                                 "error": {
                                     "message": "Completed Successfully",
                                     "response": {
@@ -455,7 +455,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
                         logger.error(`Command Status Topic for Errored Command: ${commandStatusTopic}`);
                         client.publish(commandStatusTopic,
                             JSON.stringify({
-                                "Command": errorPayload,
+                                "command": errorPayload,
                                 "completionTimestamp": completionTimestamp
                             }), { retain: true });
                     }
