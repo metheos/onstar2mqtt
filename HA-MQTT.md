@@ -140,7 +140,7 @@ mqtt:
       payload_available: "false"
       payload_not_available: "true"
       state_topic: "homeassistant/YOUR_VEHICLE_VIN/command/getLocation/state"
-      value_template: "{{ value_json.Command.error.message }}"  
+      value_template: "{{ value_json.command.error.message }}"  
       icon: mdi:message-alert
 ```
 
