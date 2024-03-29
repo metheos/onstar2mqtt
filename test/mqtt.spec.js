@@ -100,7 +100,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     //message: 'na',
                     state_class: 'measurement',
@@ -123,7 +124,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     //message: 'na',
                     state_class: 'measurement',
@@ -162,7 +164,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     state_class: 'total_increasing',
                     device_class: 'distance',
@@ -184,7 +187,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     state_class: 'total_increasing',
                     device_class: 'distance',
@@ -220,7 +224,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     //message: 'na',                      
                     state_class: undefined,
@@ -292,7 +297,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
 
                     state_class: 'measurement',
@@ -317,7 +323,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
 
                     state_class: 'measurement',
@@ -342,7 +349,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
 
                     state_class: 'measurement',
@@ -367,7 +375,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
 
                     state_class: 'measurement',
@@ -396,7 +405,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     //message: 'YELLOW',
                     state_class: 'measurement',
@@ -425,7 +435,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     state_class: 'measurement',
                     device_class: 'volume_storage',
@@ -447,7 +458,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     state_class: 'measurement',
                     device_class: 'volume_storage',
@@ -469,7 +481,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     state_class: 'measurement',
                     device_class: undefined,
@@ -515,7 +528,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     state_class: 'measurement',
                     device_class: undefined,
@@ -551,7 +565,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     state_class: 'total_increasing',
                     device_class: 'volume',
@@ -587,7 +602,8 @@ describe('MQTT', () => {
                         ],
                         manufacturer: 'foo',
                         model: '2020 bar',
-                        name: '2020 foo bar'
+                        name: '2020 foo bar',
+                        suggested_area: "2020 foo bar Sensors",
                     },
                     state_class: undefined,
                     device_class: 'plug',
