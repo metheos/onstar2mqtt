@@ -87,7 +87,7 @@ const getVehicles = async commands => {
         _.get(vehiclesRes, 'response.data.vehicles.vehicle'),
         v => new Vehicle(v)
     );
-    logger.debug('Vehicle request response', { vehicles: _.map(vehicles, v => v.toString()) });
+    logger.debug('Vehicle request response:', { vehicles: _.map(vehicles, v => v.toString()) });
     return vehicles;
 }
 
@@ -545,7 +545,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
 
 };
 
-logger.info('Starting OnStar2MQTT Polling');
+logger.info('!-- Starting OnStar2MQTT Polling --!');
 (async () => {
     try {
         const commands = init();
