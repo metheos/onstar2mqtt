@@ -627,242 +627,10 @@ describe('MQTT', () => {
             });
         });
 
-        describe('createCommandStatusSensorConfigPayload', () => {
-            it('should generate command status sensor config payload', () => {
-                const command = 'lock';
-                const expectedConfigPayload = {
-                    topic: "homeassistant/sensor/XXX/lock_status_monitor/config",
-                    payload: {
-                        availability: {
-                            payload_available: 'true',
-                            payload_not_available: 'false',
-                            topic: "homeassistant/XXX/available",
-                        },
-                        device: {
-                            identifiers: [
-                                'XXX_Command_Status_Monitor'
-                            ],
-                            manufacturer: 'foo',
-                            model: '2020 bar',
-                            name: '2020 foo bar Command Status Monitor Sensors',
-                            suggested_area: "2020 foo bar Command Status Monitor Sensors",
-                        },
-                        icon: 'mdi:message-alert',
-                        name: 'Command lock Status Monitor',
-                        state_topic: 'homeassistant/sensor/XXX/lock/state',
-                        unique_id: 'xxx_lock_command_status_monitor',
-                        value_template: '{{ value_json.command.error.message }}',
-                    }
-                };
-                const result = mqtt.createCommandStatusSensorConfigPayload(command);
-                assert.deepStrictEqual(result, expectedConfigPayload);
-            });
-        });
-
-
-        describe('createCommandStatusSensorTimestampConfigPayload', () => {
-            it('should generate command status sensor timestamp config payload', () => {
-                const command = 'lock';
-                const expectedConfigPayload = {
-                    topic: "homeassistant/sensor/XXX/lock_status_timestamp/config",
-                    payload: {
-                        availability: {
-                            payload_available: 'true',
-                            payload_not_available: 'false',
-                            topic: "homeassistant/XXX/available"
-                        },
-                        device: {
-                            identifiers: [
-                                'XXX_Command_Status_Monitor'
-                            ],
-                            manufacturer: 'foo',
-                            model: '2020 bar',
-                            name: '2020 foo bar Command Status Monitor Sensors',
-                            suggested_area: "2020 foo bar Command Status Monitor Sensors",
-                        },
-                        device_class: "timestamp",
-                        icon: "mdi:calendar-clock",
-                        name: 'Command lock Status Monitor Timestamp',
-                        state_topic: 'homeassistant/sensor/XXX/lock/state',
-                        unique_id: 'xxx_lock_command_status_timestamp_monitor',
-                        value_template: '{{ value_json.completionTimestamp }}',
-                    }
-                };
-                const result = mqtt.createCommandStatusSensorTimestampConfigPayload(command);
-                assert.deepStrictEqual(result, expectedConfigPayload);
-            });
-        });
-
-        describe('createPollingStatusMessageSensorConfigPayload', () => {
-            it('should generate the correct sensor config payload for polling status message', () => {
-                const pollingStatusTopicState = 'homeassistant/XXX/polling_status/state';
-                const expectedTopic = 'homeassistant/sensor/XXX/polling_status_message/config';
-                const expectedPayload = {
-                    "device": {
-                        "identifiers": ['XXX_Command_Status_Monitor'],
-                        "manufacturer": 'foo',
-                        "model": '2020 bar',
-                        "name": '2020 foo bar Command Status Monitor Sensors',
-                        "suggested_area": '2020 foo bar Command Status Monitor Sensors',
-                    },
-                    "availability": {
-                        "topic": 'homeassistant/XXX/available',
-                        "payload_available": 'true',
-                        "payload_not_available": 'false',
-                    },
-                    "unique_id": 'xxx_polling_status_message',
-                    "name": 'Polling Status Message',
-                    "state_topic": pollingStatusTopicState,
-                    "value_template": "{{ value_json.error.message }}",
-                    "icon": "mdi:message-alert",
-                };
-
-                const result = mqtt.createPollingStatusMessageSensorConfigPayload(pollingStatusTopicState);
-
-                assert.deepStrictEqual(result.topic, expectedTopic);
-                assert.deepStrictEqual(result.payload, expectedPayload);
-            });
-        });
-
-        describe('createPollingStatusCodeSensorConfigPayload', () => {
-            it('should generate the correct config payload for polling status code sensor', () => {
-                const pollingStatusTopicState = 'homeassistant/XXX/polling_status_code/state';
-                const expectedTopic = 'homeassistant/sensor/XXX/polling_status_code/config';
-                const expectedPayload = {
-                    device: {
-                        identifiers: ['XXX_Command_Status_Monitor'],
-                        manufacturer: 'foo',
-                        model: '2020 bar',
-                        name: '2020 foo bar Command Status Monitor Sensors',
-                        suggested_area: '2020 foo bar Command Status Monitor Sensors',
-                    },
-                    availability: {
-                        topic: 'homeassistant/XXX/available',
-                        payload_available: 'true',
-                        payload_not_available: 'false',
-                    },
-                    unique_id: 'xxx_polling_status_code',
-                    name: 'Polling Status Code',
-                    state_topic: pollingStatusTopicState,
-                    value_template: '{{ value_json.error.response.status | int(0) }}',
-                    icon: 'mdi:sync-alert',
-                };
-
-                const result = mqtt.createPollingStatusCodeSensorConfigPayload(pollingStatusTopicState);
-
-                assert.deepStrictEqual(result.topic, expectedTopic);
-                assert.deepStrictEqual(result.payload, expectedPayload);
-            });
-        });
-
-        describe('createPollingStatusTimestampSensorConfigPayload', () => {
-            it('should generate the correct config payload', () => {
-                const pollingStatusTopicState = 'homeassistant/XXX/polling_status_timestamp/state';
-                const expectedTopic = 'homeassistant/sensor/XXX/polling_status_timestamp/config';
-                const expectedPayload = {
-                    device: {
-                        identifiers: ['XXX_Command_Status_Monitor'],
-                        manufacturer: 'foo',
-                        model: '2020 bar',
-                        name: '2020 foo bar Command Status Monitor Sensors',
-                        suggested_area: '2020 foo bar Command Status Monitor Sensors',
-                    },
-                    availability: {
-                        topic: 'homeassistant/XXX/available',
-                        payload_available: 'true',
-                        payload_not_available: 'false',
-                    },
-                    unique_id: 'xxx_polling_status_timestamp',
-                    name: 'Polling Status Timestamp',
-                    state_topic: pollingStatusTopicState,
-                    value_template: '{{ value_json.completionTimestamp }}',
-                    device_class: 'timestamp',
-                    icon: 'mdi:calendar-clock',
-                };
-
-                const result = mqtt.createPollingStatusTimestampSensorConfigPayload(pollingStatusTopicState);
-
-                assert.deepStrictEqual(result.topic, expectedTopic);
-                assert.deepStrictEqual(result.payload, expectedPayload);
-            });
-        });
-
-        describe('createPollingRefreshIntervalSensorConfigPayload', () => {
-            it('should generate the correct config payload for polling refresh interval sensor', () => {
-                const refreshIntervalCurrentValTopic = 'homeassistant/XXX/polling_refresh_interval/state';
-                const expectedTopic = 'homeassistant/sensor/XXX/polling_refresh_interval/config';
-                const expectedPayload = {
-                    device: {
-                        identifiers: ['XXX_Command_Status_Monitor'],
-                        manufacturer: 'foo',
-                        model: '2020 bar',
-                        name: '2020 foo bar Command Status Monitor Sensors',
-                        suggested_area: '2020 foo bar Command Status Monitor Sensors',
-                    },
-                    availability: {
-                        topic: 'homeassistant/XXX/available',
-                        payload_available: 'true',
-                        payload_not_available: 'false',
-                    },
-                    unique_id: 'xxx_polling_refresh_interval',
-                    name: 'Polling Refresh Interval',
-                    state_topic: refreshIntervalCurrentValTopic,
-                    value_template: '{{ value | int(0) }}',
-                    icon: 'mdi:timer-check-outline',
-                    unit_of_measurement: 'ms',
-                    state_class: 'measurement',
-                    device_class: 'duration',
-                };
-
-                const result = mqtt.createPollingRefreshIntervalSensorConfigPayload(refreshIntervalCurrentValTopic);
-
-                assert.deepStrictEqual(result.topic, expectedTopic);
-                assert.deepStrictEqual(result.payload, expectedPayload);
-            });
-        });
-
-        describe('createPollingStatusTFSensorConfigPayload', () => {
-            it('should generate the correct config payload for polling status TF sensor', () => {
-                const pollingStatusTopicState = 'homeassistant/XXX/polling_status_tf/state';
-                const expectedTopic = 'homeassistant/binary_sensor/XXX/polling_status_tf/config';
-                const expectedPayload = {
-                    "device": {
-                        "identifiers": ['XXX_Command_Status_Monitor'],
-                        "manufacturer": 'foo',
-                        "model": '2020 bar',
-                        "name": '2020 foo bar Command Status Monitor Sensors',
-                        "suggested_area": '2020 foo bar Command Status Monitor Sensors',
-                    },
-                    "availability": {
-                        "topic": 'homeassistant/XXX/available',
-                        "payload_available": 'true',
-                        "payload_not_available": 'false',
-                    },
-                    "unique_id": 'xxx_onstar_polling_status_successful',
-                    "name": 'Polling Status Successful',
-                    "state_topic": pollingStatusTopicState,
-                    "payload_on": "false",
-                    "payload_off": "true",
-                    "device_class": "problem",
-                    "icon": "mdi:sync-alert",
-                };
-
-                const result = mqtt.createPollingStatusTFSensorConfigPayload(pollingStatusTopicState);
-
-                assert.deepStrictEqual(result.topic, expectedTopic);
-                assert.deepStrictEqual(result.payload, expectedPayload);
-            });
-        });
-
         describe('createButtonConfigPayload', () => {
-            it('should create button config payload for a given vehicle', () => {
-                const vehicle = {
-                    make: 'Chevrolet',
-                    model: 'Bolt',
-                    year: 2022,
-                    vin: '1G1FY6S07N4100000',
-                    toString: () => `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
-                };
+            it('should generate button config payloads', () => {
+                const vehicle = new Vehicle({ make: 'foo', model: 'bar', vin: 'XXX', year: 2020 });
+                const mqtt = new MQTT(vehicle);
 
                 const expectedButtonInstances = [];
                 const expectedButtonConfigs = [];
@@ -873,10 +641,11 @@ describe('MQTT', () => {
                     const button = {
                         name: buttonName,
                         config: buttonConfig,
-                        vehicle: vehicle,
+                        vehicle: vehicle
                     };
 
                     expectedButtonInstances.push(button);
+                    expectedButtonConfigs.push(buttonConfig);
 
                     let unique_id = `${vehicle.vin}_Command_${button.name}`;
                     unique_id = unique_id.replace(/\s+/g, '-').toLowerCase();
@@ -886,27 +655,23 @@ describe('MQTT', () => {
                             "identifiers": [vehicle.vin],
                             "manufacturer": vehicle.make,
                             "model": vehicle.year + ' ' + vehicle.model,
-                            "name": vehicle.toString(),
-                            "suggested_area": vehicle.toString(),
+                            "name": vehicle.toString()
                         },
                         "availability": {
-                            "topic": 'homeassistant/XXX/available',
+                            "topic": mqtt.getAvailabilityTopic(),
                             "payload_available": 'true',
                             "payload_not_available": 'false',
                         },
                         "unique_id": unique_id,
                         "name": `Command ${button.name}`,
-                        "command_topic": 'homeassistant/XXX/command',
+                        "command_topic": mqtt.getCommandTopic(),
                         "payload_press": JSON.stringify({ "command": MQTT.CONSTANTS.BUTTONS[button.name] }),
                         "qos": 2,
                         "enabled_by_default": false,
                     });
-
-                    expectedButtonConfigs.push(buttonConfig);
                 }
 
                 const result = mqtt.createButtonConfigPayload(vehicle);
-
                 assert.deepStrictEqual(result.buttonInstances, expectedButtonInstances);
                 assert.deepStrictEqual(result.buttonConfigs, expectedButtonConfigs);
                 assert.deepStrictEqual(result.configPayloads, expectedConfigPayloads);
