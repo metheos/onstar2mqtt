@@ -69,10 +69,10 @@ Supply these values to the ENV vars below. The default data refresh interval is 
   * Buttons are added disabled by default because it's easy to accidentally press the wrong button and trigger an action at an inopportune time.
 Enable at your own risk and you assume all responsibility for your actions.
   * All available buttons for all vehicles are included for now, so only enable the buttons you need and/or work for your vehicle.
- 
+
 * **NEW - MQTT Auto-Discovery for Command Status Sensors for HA Added Starting at v1.15.0**
   * Command Status and Timestamp from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
- 
+
 * **NEW - MQTT Auto-Discovery for Polling Status Sensors for HA Added Starting at v1.16.0**
   * At this point, pretty much every available sensor, button and status is published to MQTT auto-discovery topics  
 
