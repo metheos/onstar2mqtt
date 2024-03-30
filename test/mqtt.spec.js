@@ -649,7 +649,7 @@ describe('MQTT', () => {
                         },
                         icon: 'mdi:message-alert',
                         name: 'Command lock Status Monitor',
-                        state_topic: 'homeassistant/sensor/XXX/lock/state',
+                        state_topic: 'homeassistant/XXX/command/lock/state',
                         unique_id: 'xxx_lock_command_status_monitor',
                         value_template: '{{ value_json.command.error.message }}',
                     }
@@ -683,7 +683,7 @@ describe('MQTT', () => {
                         device_class: "timestamp",
                         icon: "mdi:calendar-clock",
                         name: 'Command lock Status Monitor Timestamp',
-                        state_topic: 'homeassistant/sensor/XXX/lock/state',
+                        state_topic: 'homeassistant/XXX/command/lock/state',
                         unique_id: 'xxx_lock_command_status_timestamp_monitor',
                         value_template: '{{ value_json.completionTimestamp }}',
                     }
