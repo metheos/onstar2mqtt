@@ -87,6 +87,10 @@ icon: 'mdi:map-marker'
 
 #### MQTT Polling Status Success Monitor (T/F)
 
+* MQTT Auto-Discovery for Polling Status Sensors for HA Added Starting at v1.16.0
+  * Polling Status Message, Timestamp and True/False Sensor from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.  
+
+To add manually if wanted:
 Create a MQTT binary sensor in Home Assistant
 
 ```yaml
@@ -108,6 +112,10 @@ mqtt:
 
 #### MQTT Polling Status Success Timestamp Monitor
 
+* MQTT Auto-Discovery for Polling Status Sensors for HA Added Starting at v1.16.0
+  * Polling Status Message, Timestamp and True/False Sensor from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+
+To add manually if wanted:
 Create a MQTT sensor in Home Assistant
 
 ```yaml
