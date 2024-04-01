@@ -612,7 +612,7 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                         const sensorMessagePayload = mqttHA.createSensorMessageConfigPayload(sensor.name, sensor.component, sensor.icon);
                         logger.debug('Sensor Message Payload:', sensorMessagePayload);
                         client.publish(sensorMessagePayload.topic, JSON.stringify(sensorMessagePayload.payload), { retain: true });
-                    }                    
+                    }
                     logger.info(`Sensor Message Configs Published!`);
                     buttonConfigsPublished = 'true';
                 }

@@ -1406,36 +1406,36 @@ describe('MQTT', () => {
                 assert.deepStrictEqual(result, expected);
             });
 
-        it('should create sensor message config payload when component is provided', () => {
-            const sensor = 'oil_life';
-            const component = undefined;
-            const icon = 'testIcon';
-            const expected = {
-                topic: 'testPrefix/sensor/testInstance/oil_life_message/config',
-                payload: {
-                    device: {
-                        identifiers: ['1234'],
-                        manufacturer: 'TestMake',
-                        model: '2022 TestModel',
-                        name: 'TestVehicle',
-                        suggested_area: 'TestVehicle',
-                    },
-                    availability: {
-                        topic: mqtt.getAvailabilityTopic(),
-                        payload_available: 'true',
-                        payload_not_available: 'false',
-                    },
-                    unique_id: '1234_oil_life',
-                    name: 'Oil Life Message',
-                    state_topic: 'testPrefix/sensor/testInstance/oil_life/state',
-                    value_template: '{{ value_json.oil_life_message }}',
-                    icon: 'testIcon',
-                }
-            };
-            const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
-            assert.deepStrictEqual(result, expected);
+            it('should create sensor message config payload when component is provided', () => {
+                const sensor = 'oil_life';
+                const component = undefined;
+                const icon = 'testIcon';
+                const expected = {
+                    topic: 'testPrefix/sensor/testInstance/oil_life_message/config',
+                    payload: {
+                        device: {
+                            identifiers: ['1234'],
+                            manufacturer: 'TestMake',
+                            model: '2022 TestModel',
+                            name: 'TestVehicle',
+                            suggested_area: 'TestVehicle',
+                        },
+                        availability: {
+                            topic: mqtt.getAvailabilityTopic(),
+                            payload_available: 'true',
+                            payload_not_available: 'false',
+                        },
+                        unique_id: '1234_oil_life',
+                        name: 'Oil Life Message',
+                        state_topic: 'testPrefix/sensor/testInstance/oil_life/state',
+                        value_template: '{{ value_json.oil_life_message }}',
+                        icon: 'testIcon',
+                    }
+                };
+                const result = mqtt.createSensorMessageConfigPayload(sensor, component, icon);
+                assert.deepStrictEqual(result, expected);
+            });
         });
-    });
 
     });
 });
