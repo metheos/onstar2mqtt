@@ -576,7 +576,7 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                     let tasks;
                     if (mqttConfig.listAllSensorsTogether === true) {
                         tasks = [
-                            mqttHA.createButtonConfigPayload(v),                            
+                            mqttHA.createButtonConfigPayload(v),
                         ];
                     } else {
                         tasks = [
@@ -598,9 +598,23 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
                             client.publish(buttonConfig, JSON.stringify(configPayload), { retain: true });
                         });
                     });
-
-                    buttonConfigsPublished = 'true';
                     logger.info(`Button Configs Published!`);
+
+                    const sensors = [
+                        { name: 'oil_life', component: null, icon: 'mdi:oil-level' },
+                        { name: 'tire_pressure', component: 'tire_pressure_lf_message', icon: 'mdi:car-tire-alert' },
+                        { name: 'tire_pressure', component: 'tire_pressure_lr_message', icon: 'mdi:car-tire-alert' },
+                        { name: 'tire_pressure', component: 'tire_pressure_rf_message', icon: 'mdi:car-tire-alert' },
+                        { name: 'tire_pressure', component: 'tire_pressure_rr_message', icon: 'mdi:car-tire-alert' },
+                    ];
+
+                    for (let sensor of sensors) {
+                        const sensorMessagePayload = mqttHA.createSensorMessageConfigPayload(sensor.name, sensor.component, sensor.icon);
+                        logger.debug('Sensor Message Payload:', sensorMessagePayload);
+                        client.publish(sensorMessagePayload.topic, JSON.stringify(sensorMessagePayload.payload), { retain: true });
+                    }                    
+                    logger.info(`Sensor Message Configs Published!`);
+                    buttonConfigsPublished = 'true';
                 }
             }
 
