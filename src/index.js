@@ -10,7 +10,8 @@ const Commands = require('./commands');
 const logger = require('./logger');
 const fs = require('fs');
 //const CircularJSON = require('circular-json');
-let buttonConfigsPublished = ''
+let buttonConfigsPublished = '';
+let refreshIntervalConfigPublished = '';
 
 const onstarConfig = {
     deviceId: process.env.ONSTAR_DEVICEID || uuidv4(),
@@ -758,10 +759,11 @@ logger.info('!-- Starting OnStar2MQTT Polling --!');
         logger.info(`refreshIntervalTopic: ${refreshIntervalTopic}`);
         logger.info(`refreshIntervalCurrentValTopic: ${refreshIntervalCurrentValTopic}`);
 
-        if (!buttonConfigsPublished) {
+        if (!refreshIntervalConfigPublished) {
             const pollingRefreshIntervalPayload = mqttHA.createPollingRefreshIntervalSensorConfigPayload(refreshIntervalCurrentValTopic, mqttConfig.listAllSensorsTogether);
             logger.debug("pollingRefreshIntervalSensorConfigPayload:", pollingRefreshIntervalPayload);
-            client.publish(pollingRefreshIntervalPayload.topic, pollingRefreshIntervalPayload.payload, { retain: true });
+            client.publish(pollingRefreshIntervalPayload.topic, JSON.stringify(pollingRefreshIntervalPayload.payload), { retain: true });
+            refreshIntervalConfigPublished = 'true';
             logger.info(`Polling Refresh Interval Sensor Published!`);
         }
 
