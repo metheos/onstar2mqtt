@@ -431,24 +431,29 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             const topic = mqttHA.getStateTopic({ name: command });
                             const deviceTrackerConfigTopic = mqttHA.getDeviceTrackerConfigTopic();
                             const vehicle = mqttHA.vehicle.toString();
-                            // Done - create device_tracker entity. (Was - MQTT device tracker doesn't support lat/lon and mqtt_json)
-                            // Now has discovery
+
+                            const locationData = {
+                                latitude: parseFloat(location.lat),
+                                longitude: parseFloat(location.long),
+                                speed: parseFloat(speed.value),
+                                direction: parseFloat(direction.value)
+                            };
+
+                            const deviceTrackerConfig = {
+                                "json_attributes_topic": topic,
+                                "name": vehicle,
+                                "unique_id": MQTT.convertName(vehicle) + '_device_tracker',
+                            };
+
                             logger.debug(vehicle)
-                            client.publish(topic,
-                                JSON.stringify({
-                                    latitude: parseFloat(location.lat),
-                                    longitude: parseFloat(location.long),
-                                    speed: parseFloat(speed.value),
-                                    direction: parseFloat(direction.value)
-                                }), { retain: true })
-                            client.publish(deviceTrackerConfigTopic,
-                                JSON.stringify({
-                                    "json_attributes_topic": topic,
-                                    "name": vehicle
-                                }), { retain: true })
+
+                            client.publish(topic, JSON.stringify(locationData), { retain: true })
+
+                            client.publish(deviceTrackerConfigTopic, JSON.stringify(deviceTrackerConfig), { retain: true })
                                 .then(() => {
                                     logger.warn(`Published device_tracker config to topic: ${deviceTrackerConfigTopic}`);
                                     logger.warn(`Published location to topic: ${topic}`);
+                                    logger.debug("Device Tracker Config:", deviceTrackerConfig);
                                 })
                         }
                     }
