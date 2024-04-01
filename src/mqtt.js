@@ -141,17 +141,31 @@ class MQTT {
     //        return `${this.prefix}/sensor/${this.instance}`;
     //    }
 
-    createCommandStatusSensorConfigPayload(command) {
+    createCommandStatusSensorConfigPayload(command, listAllSensorsTogether) {
         let topic = `${this.prefix}/sensor/${this.instance}/${command}_status_monitor/config`;
         let commandStatusTopic = `${this.prefix}/${this.instance}/command/${command}/state`;
-        let payload = {
-            "device": {
+
+        let device;
+        if (listAllSensorsTogether === true) {
+            device = {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            };
+        } else {
+            device = {
                 "identifiers": [this.vehicle.vin + "_Command_Status_Monitor"],
                 "manufacturer": this.vehicle.make,
                 "model": this.vehicle.year + ' ' + this.vehicle.model,
                 "name": this.vehicle.toString() + ' Command Status Monitor Sensors',
                 "suggested_area": this.vehicle.toString() + ' Command Status Monitor Sensors',
-            },
+            };
+        }
+
+        let payload = {
+            "device": device,
             "availability": {
                 "topic": this.getAvailabilityTopic(),
                 "payload_available": 'true',
@@ -163,20 +177,35 @@ class MQTT {
             "value_template": "{{ value_json.command.error.message }}",
             "icon": "mdi:message-alert",
         };
+
         return { topic, payload };
     }
 
-    createCommandStatusSensorTimestampConfigPayload(command) {
+    createCommandStatusSensorTimestampConfigPayload(command, listAllSensorsTogether) {
         let topic = `${this.prefix}/sensor/${this.instance}/${command}_status_timestamp/config`;
         let commandStatusTopic = `${this.prefix}/${this.instance}/command/${command}/state`;
-        let payload = {
-            "device": {
+
+        let device;
+        if (listAllSensorsTogether === true) {
+            device = {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            };
+        } else {
+            device = {
                 "identifiers": [this.vehicle.vin + "_Command_Status_Monitor"],
                 "manufacturer": this.vehicle.make,
                 "model": this.vehicle.year + ' ' + this.vehicle.model,
                 "name": this.vehicle.toString() + ' Command Status Monitor Sensors',
                 "suggested_area": this.vehicle.toString() + ' Command Status Monitor Sensors',
-            },
+            };
+        }
+
+        let payload = {
+            "device": device,
             "availability": {
                 "topic": this.getAvailabilityTopic(),
                 "payload_available": 'true',
@@ -287,16 +316,30 @@ class MQTT {
         return { buttonInstances, buttonConfigs, configPayloads };
     }
 
-    createPollingStatusMessageSensorConfigPayload(pollingStatusTopicState) {
+    createPollingStatusMessageSensorConfigPayload(pollingStatusTopicState, listAllSensorsTogether) {
         let topic = `${this.prefix}/sensor/${this.instance}/polling_status_message/config`;
-        let payload = {
-            "device": {
+
+        let device;
+        if (listAllSensorsTogether === true) {
+            device = {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            };
+        } else {
+            device = {
                 "identifiers": [this.vehicle.vin + "_Command_Status_Monitor"],
                 "manufacturer": this.vehicle.make,
                 "model": this.vehicle.year + ' ' + this.vehicle.model,
                 "name": this.vehicle.toString() + ' Command Status Monitor Sensors',
                 "suggested_area": this.vehicle.toString() + ' Command Status Monitor Sensors',
-            },
+            };
+        }
+
+        let payload = {
+            "device": device,
             "availability": {
                 "topic": this.getAvailabilityTopic(),
                 "payload_available": 'true',
@@ -311,16 +354,30 @@ class MQTT {
         return { topic, payload };
     }
 
-    createPollingStatusCodeSensorConfigPayload(pollingStatusTopicState) {
+    createPollingStatusCodeSensorConfigPayload(pollingStatusTopicState, listAllSensorsTogether) {
         let topic = `${this.prefix}/sensor/${this.instance}/polling_status_code/config`;
-        let payload = {
-            "device": {
+
+        let device;
+        if (listAllSensorsTogether === true) {
+            device = {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            };
+        } else {
+            device = {
                 "identifiers": [this.vehicle.vin + "_Command_Status_Monitor"],
                 "manufacturer": this.vehicle.make,
                 "model": this.vehicle.year + ' ' + this.vehicle.model,
                 "name": this.vehicle.toString() + ' Command Status Monitor Sensors',
                 "suggested_area": this.vehicle.toString() + ' Command Status Monitor Sensors',
-            },
+            };
+        }
+
+        let payload = {
+            "device": device,
             "availability": {
                 "topic": this.getAvailabilityTopic(),
                 "payload_available": 'true',
@@ -335,16 +392,30 @@ class MQTT {
         return { topic, payload };
     }
 
-    createPollingStatusTimestampSensorConfigPayload(pollingStatusTopicState) {
+    createPollingStatusTimestampSensorConfigPayload(pollingStatusTopicState, listAllSensorsTogether) {
         let topic = `${this.prefix}/sensor/${this.instance}/polling_status_timestamp/config`;
-        let payload = {
-            "device": {
+
+        let device;
+        if (listAllSensorsTogether === true) {
+            device = {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            };
+        } else {
+            device = {
                 "identifiers": [this.vehicle.vin + "_Command_Status_Monitor"],
                 "manufacturer": this.vehicle.make,
                 "model": this.vehicle.year + ' ' + this.vehicle.model,
                 "name": this.vehicle.toString() + ' Command Status Monitor Sensors',
                 "suggested_area": this.vehicle.toString() + ' Command Status Monitor Sensors',
-            },
+            };
+        }
+
+        let payload = {
+            "device": device,
             "availability": {
                 "topic": this.getAvailabilityTopic(),
                 "payload_available": 'true',
@@ -360,16 +431,30 @@ class MQTT {
         return { topic, payload };
     }
 
-    createPollingRefreshIntervalSensorConfigPayload(refreshIntervalCurrentValTopic) {
+    createPollingRefreshIntervalSensorConfigPayload(refreshIntervalCurrentValTopic, listAllSensorsTogether) {
         let topic = `${this.prefix}/sensor/${this.instance}/polling_refresh_interval/config`;
-        let payload = {
-            "device": {
+
+        let device;
+        if (listAllSensorsTogether === true) {
+            device = {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            };
+        } else {
+            device = {
                 "identifiers": [this.vehicle.vin + "_Command_Status_Monitor"],
                 "manufacturer": this.vehicle.make,
                 "model": this.vehicle.year + ' ' + this.vehicle.model,
                 "name": this.vehicle.toString() + ' Command Status Monitor Sensors',
                 "suggested_area": this.vehicle.toString() + ' Command Status Monitor Sensors',
-            },
+            };
+        }
+
+        let payload = {
+            "device": device,
             "availability": {
                 "topic": this.getAvailabilityTopic(),
                 "payload_available": 'true',
@@ -387,16 +472,30 @@ class MQTT {
         return { topic, payload };
     }
 
-    createPollingStatusTFSensorConfigPayload(pollingStatusTopicTF) {
+    createPollingStatusTFSensorConfigPayload(pollingStatusTopicTF, listAllSensorsTogether) {
         let topic = `${this.prefix}/binary_sensor/${this.instance}/polling_status_tf/config`;
-        let payload = {
-            "device": {
+
+        let device;
+        if (listAllSensorsTogether === true) {
+            device = {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            };
+        } else {
+            device = {
                 "identifiers": [this.vehicle.vin + "_Command_Status_Monitor"],
                 "manufacturer": this.vehicle.make,
                 "model": this.vehicle.year + ' ' + this.vehicle.model,
                 "name": this.vehicle.toString() + ' Command Status Monitor Sensors',
                 "suggested_area": this.vehicle.toString() + ' Command Status Monitor Sensors',
-            },
+            };
+        }
+
+        let payload = {
+            "device": device,
             "availability": {
                 "topic": this.getAvailabilityTopic(),
                 "payload_available": 'true',
