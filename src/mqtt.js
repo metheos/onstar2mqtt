@@ -516,7 +516,7 @@ class MQTT {
         let topic, unique_id, sensor_name, value_template;
         if (!component) {
             topic = `${this.prefix}/sensor/${this.instance}/${sensor}_message/config`;
-            unique_id = MQTT.convertName(this.vehicle.vin) + '_' + sensor;
+            unique_id = MQTT.convertName(this.vehicle.vin) + '_' + sensor + '_message';
             sensor_name = `${sensor.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} Message`;
             value_template = `{{ value_json.${sensor}_message }}`;
         } else {
@@ -532,8 +532,9 @@ class MQTT {
             } else {
                 transformedComponent = component.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
             }
-            topic = `${this.prefix}/sensor/${this.instance}/${sensor}_${component}_message/config`;
-            unique_id = MQTT.convertName(this.vehicle.vin) + '_' + sensor + '_' + component;
+            topic = `${this.prefix}/sensor/${this.instance}/${component}/config`;
+            //unique_id = MQTT.convertName(this.vehicle.vin) + '_' + sensor + '_' + component;
+            unique_id = MQTT.convertName(this.vehicle.vin) + '_' + component;
             sensor_name = `${transformedComponent}`;
             value_template = `{{ value_json.${component} }}`;
         }
