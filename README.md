@@ -74,6 +74,9 @@ Enable at your own risk and you assume all responsibility for your actions.
   * Command Status and Timestamp from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
 
 * **NEW - MQTT Auto-Discovery for Polling Status Sensors for HA Added Starting at v1.16.0**
+  * Polling Status, Timestamp, Error Code (if applicable), Success T/F Sensor from last pollig cycle and Polling Refresh Interval Time Sensor are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
+
+* **NEW - MQTT Auto-Discovery for Sensor Status Message Sensors for HA Added Starting at v1.17.0**
   * At this point, pretty much every available sensor, button and status is published to MQTT auto-discovery topics
   * Set 'MQTT_LIST_ALL_SENSORS_TOGETHER="true"' to group all the sensors under one MQTT device starting at v1.17.0. Default is "false".  
 
