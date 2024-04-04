@@ -1297,8 +1297,9 @@ describe('MQTT', () => {
                         },
                         "unique_id": unique_id,
                         "name": `Command ${button.name}`,
+                        "icon": MQTT.CONSTANTS.BUTTONS[button.name].Icon,
                         "command_topic": 'homeassistant/XXX/command',
-                        "payload_press": JSON.stringify({ "command": MQTT.CONSTANTS.BUTTONS[button.name] }),
+                        "payload_press": JSON.stringify({ "command": MQTT.CONSTANTS.BUTTONS[button.name].Name }),
                         "qos": 2,
                         "enabled_by_default": false,
                     });
@@ -1347,7 +1348,7 @@ describe('MQTT', () => {
                 assert.strictEqual(firstPayload.unique_id, `${vehicle.vin}_Command_${firstButton.name}_Monitor`.replace(/\s+/g, '-').toLowerCase());
                 assert.strictEqual(firstPayload.name, `Command ${firstButton.name}`);
                 assert.strictEqual(firstPayload.command_topic, mqtt.getCommandTopic());
-                assert.strictEqual(firstPayload.payload_press, JSON.stringify({ "command": MQTT.CONSTANTS.BUTTONS[firstButton.name] }));
+                assert.strictEqual(firstPayload.payload_press, JSON.stringify({ "command": MQTT.CONSTANTS.BUTTONS[firstButton.name].Name }));
                 assert.strictEqual(firstPayload.qos, 2);
                 assert.strictEqual(firstPayload.enabled_by_default, false);
             });
