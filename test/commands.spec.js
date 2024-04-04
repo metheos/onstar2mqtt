@@ -28,6 +28,15 @@ describe('Commands', () => {
         commands = new Commands(onstarMock);
     });
 
+    it('should return an array of function names', () => {
+        const functionNames = Commands.getFunctionNames();
+        assert(Array.isArray(functionNames));
+        assert(functionNames.length > 0);
+        functionNames.forEach(name => {
+            assert(typeof commands[name] === 'function');
+        });
+    });
+
     it('should call getAccountVehicles method', async () => {
         const result = await commands.getAccountVehicles();
         assert.strictEqual(result, undefined);
