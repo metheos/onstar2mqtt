@@ -11,6 +11,7 @@
 ### Example Script YAML
 
 **MQTT button auto discovery is enabled starting at v1.14.0 which sends/triggers the defaults of each command. The following isn't strictly necessary, but still available if needed or for sending customized commands.**
+
 ```yaml
 alias: Car - Start Vehicle
 sequence:
@@ -21,7 +22,8 @@ sequence:
 mode: single
 icon: 'mdi:car-electric'
 ```
-#### Format for sending command options in the payload:
+
+#### Format for sending command options in the payload
 
 ```text
   * Diagnostics:
@@ -79,6 +81,7 @@ the discovery schema so a manual entity configuration is required.~~
 #### Script YAML
 
 **MQTT button auto discovery is enabled starting at v1.14.0, so the following isn't strictly necessary, but still available if needed.**
+
 ```yaml
 alias: Car - Location
 sequence:
@@ -96,7 +99,6 @@ icon: 'mdi:map-marker'
   * Polling Status Message, Timestamp and True/False Sensor from last command run are published to MQTT auto-discovery topics and are grouped in a MQTT device grouping for all command status sensors for the same vehicle.
   * Set 'MQTT_LIST_ALL_SENSORS_TOGETHER="true"' to group all the sensors under one MQTT device starting at v1.17.0. Default is "false".
   
-
 To add manually if wanted:
 Create a MQTT binary sensor in Home Assistant
 
