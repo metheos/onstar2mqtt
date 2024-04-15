@@ -45,7 +45,7 @@ if (!/^[A-HJ-NPR-Z0-9]{17}$/i.test(onstarConfig.vin)) {
 }
 
 // Validate PIN
-if (!/^\d{4}$/.test(process.env.ONSTAR_PIN)) {
+if (!/^\d{4}$/.test(onstarConfig.onStarPin)) {
     throw new Error('ONSTAR_PIN must be a 4-digit number');
 }
 
