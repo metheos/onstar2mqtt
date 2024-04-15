@@ -5,12 +5,12 @@ describe('OnstarConfig', function() {
         const onstarConfig = {vin: ' 1HGCM82633A123456', onStarPin: '1234'};
         try {
             if (!/^[A-HJ-NPR-Z0-9]{17}$/i.test(onstarConfig.vin)) {
-                throw new Error('Invalid VIN. Please check the value entered for VIN.');
+                throw new Error('Invalid VIN. Please check the value entered for VIN in ONSTAR_VIN.');
             }
             // If no error is thrown, then the test will fail
             assert.fail('Expected an error to be thrown');
         } catch (e) {
-            assert.equal(e.message, 'Invalid VIN. Please check the value entered for VIN.');
+            assert.equal(e.message, 'Invalid VIN. Please check the value entered for VIN in ONSTAR_VIN.');
         }
     });
     
@@ -18,12 +18,12 @@ describe('OnstarConfig', function() {
         const onstarConfig = {vin: '1GCM2633A123456', onStarPin: '1234'};
         try {
             if (!/^[A-HJ-NPR-Z0-9]{17}$/i.test(onstarConfig.vin)) {
-                throw new Error('Invalid VIN. Please check the value entered for VIN.');
+                throw new Error('Invalid VIN. Please check the value entered for VIN in ONSTAR_VIN.');
             }
             // If no error is thrown, then the test will fail
             assert.fail('Expected an error to be thrown');
         } catch (e) {
-            assert.equal(e.message, 'Invalid VIN. Please check the value entered for VIN.');
+            assert.equal(e.message, 'Invalid VIN. Please check the value entered for VIN in ONSTAR_VIN.');
         }
     });
 
