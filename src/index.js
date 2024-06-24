@@ -9,6 +9,7 @@ const MQTT = require('./mqtt');
 const Commands = require('./commands');
 const logger = require('./logger');
 const fs = require('fs');
+
 //const CircularJSON = require('circular-json');
 let buttonConfigsPublished = '';
 let refreshIntervalConfigPublished = '';
@@ -160,6 +161,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
 
         const commandStatusSensorConfig = mqttHA.createCommandStatusSensorConfigPayload(command, mqttConfig.listAllSensorsTogether);
         logger.debug("Command Status Sensor Config:", commandStatusSensorConfig);
+        const commandStatusTFSensorConfig = mqttHA.createCommandStatusTFSensorConfigPayload(command, mqttConfig.listAllSensorsTogether);
+        logger.debug("Command Status TF Sensor Config:", commandStatusTFSensorConfig);
         const commandStatusSensorTimestampConfig = mqttHA.createCommandStatusSensorTimestampConfigPayload(command, mqttConfig.listAllSensorsTogether);
         logger.debug("Command Status Sensor Timestamp Config:", commandStatusSensorTimestampConfig);
 
@@ -169,6 +172,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
             logger.warn('Command sent:', { command });
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusSensorConfig.topic, JSON.stringify(commandStatusSensorConfig.payload), { retain: true });
+            client.publish(commandStatusTFSensorConfig.topic, JSON.stringify(commandStatusTFSensorConfig.payload), { retain: true });
             client.publish(commandStatusSensorTimestampConfig.topic, JSON.stringify(commandStatusSensorTimestampConfig.payload), { retain: true });
             client.publish(commandStatusTopic,
                 JSON.stringify({
@@ -181,7 +185,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             }
                         }
                     },
-                    "completionTimestamp": new Date().toISOString()
+                    "completionTimestamp": new Date().toISOString(),
+                    "successful": ''
                 }), { retain: true });
             (async () => {
                 const states = new Map();
@@ -244,7 +249,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                                 }
                             }
                         },
-                        "completionTimestamp": completionTimestamp
+                        "completionTimestamp": completionTimestamp,
+                        "successful": "true"
                     }), { retain: true }
                 );
             })()
@@ -273,7 +279,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                         client.publish(commandStatusTopic,
                             JSON.stringify({
                                 "command": errorPayload,
-                                "completionTimestamp": completionTimestamp
+                                "completionTimestamp": completionTimestamp,
+                                "successful": "false"
                             }), { retain: true });
                     }
                 })
@@ -335,6 +342,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
 
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusSensorConfig.topic, JSON.stringify(commandStatusSensorConfig.payload), { retain: true });
+            client.publish(commandStatusTFSensorConfig.topic, JSON.stringify(commandStatusTFSensorConfig.payload), { retain: true });
             client.publish(commandStatusSensorTimestampConfig.topic, JSON.stringify(commandStatusSensorTimestampConfig.payload), { retain: true });
             client.publish(commandStatusTopic,
                 JSON.stringify({
@@ -347,7 +355,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             }
                         }
                     },
-                    "completionTimestamp": new Date().toISOString()
+                    "completionTimestamp": new Date().toISOString(),
+                    "successful": ''
                 }), { retain: true });
             //commandFn(modifiedOptions || {})
             logger.debug(`Command sent: Command: ${command}, Request: ${JSON.stringify(request)}`);
@@ -370,7 +379,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                                     }
                                 }
                             },
-                            "completionTimestamp": completionTimestamp
+                            "completionTimestamp": completionTimestamp,
+                            "successful": "true"
                         }), { retain: true }
                     );
                     const responseData = _.get(data, 'response.data');
@@ -406,7 +416,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                         client.publish(commandStatusTopic,
                             JSON.stringify({
                                 "command": errorPayload,
-                                "completionTimestamp": completionTimestamp
+                                "completionTimestamp": completionTimestamp,
+                                "successful": "false"
                             }), { retain: true });
                     }
                 });
@@ -416,6 +427,7 @@ const configureMQTT = async (commands, client, mqttHA) => {
             logger.warn('Command sent:', { command }, { options });
             logger.warn(`Command Status Topic: ${commandStatusTopic}`);
             client.publish(commandStatusSensorConfig.topic, JSON.stringify(commandStatusSensorConfig.payload), { retain: true });
+            client.publish(commandStatusTFSensorConfig.topic, JSON.stringify(commandStatusTFSensorConfig.payload), { retain: true });
             client.publish(commandStatusSensorTimestampConfig.topic, JSON.stringify(commandStatusSensorTimestampConfig.payload), { retain: true });
             client.publish(commandStatusTopic,
                 JSON.stringify({
@@ -428,7 +440,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                             }
                         }
                     },
-                    "completionTimestamp": new Date().toISOString()
+                    "completionTimestamp": new Date().toISOString(),
+                    "successful": ''
                 }), { retain: true });
             commandFn(options || {})
                 .then(data => {
@@ -449,7 +462,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                                     }
                                 }
                             },
-                            "completionTimestamp": completionTimestamp
+                            "completionTimestamp": completionTimestamp,
+                            "successful": "true"
                         }), { retain: true }
                     );
                     const responseData = _.get(data, 'response.data');
@@ -517,7 +531,8 @@ const configureMQTT = async (commands, client, mqttHA) => {
                         client.publish(commandStatusTopic,
                             JSON.stringify({
                                 "command": errorPayload,
-                                "completionTimestamp": completionTimestamp
+                                "completionTimestamp": completionTimestamp,
+                                "successful": "false"
                             }), { retain: true });
                     }
                 });

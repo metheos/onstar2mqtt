@@ -244,6 +244,49 @@ class MQTT {
         return { topic, payload };
     }
 
+    createCommandStatusTFSensorConfigPayload(command, listAllSensorsTogether) {
+        let topic = `${this.prefix}/binary_sensor/${this.instance}/${command}_status_monitor_tf/config`;
+        let commandStatusTopic = `${this.prefix}/${this.instance}/command/${command}/state`;
+
+        let device;
+        if (listAllSensorsTogether === true) {
+            device = {
+                "identifiers": [this.vehicle.vin],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString(),
+                "suggested_area": this.vehicle.toString(),
+            };
+        } else {
+            device = {
+                "identifiers": [this.vehicle.vin + "_Command_Status_Monitor"],
+                "manufacturer": this.vehicle.make,
+                "model": this.vehicle.year + ' ' + this.vehicle.model,
+                "name": this.vehicle.toString() + ' Command Status Monitor Sensors',
+                "suggested_area": this.vehicle.toString() + ' Command Status Monitor Sensors',
+            };
+        }
+
+        let payload = {
+            "device": device,
+            "availability": {
+                "topic": this.getAvailabilityTopic(),
+                "payload_available": 'true',
+                "payload_not_available": 'false',
+            },
+            "unique_id": (MQTT.convertName(this.vehicle.vin)) + "_" + (MQTT.convertName(command)) + "_command_status_monitor_tf",
+            "name": 'Command ' + command + ' Succeeded',
+            "state_topic": commandStatusTopic,
+            "value_template": "{{ value_json.successful }}",
+            "payload_on": "false",
+            "payload_off": "true",
+            "device_class": "problem",
+            "icon": "mdi:alert-circle-check",
+        };
+
+        return { topic, payload };
+    }
+
     createCommandStatusSensorTimestampConfigPayload(command, listAllSensorsTogether) {
         let topic = `${this.prefix}/sensor/${this.instance}/${command}_status_timestamp/config`;
         let commandStatusTopic = `${this.prefix}/${this.instance}/command/${command}/state`;
