@@ -33,7 +33,8 @@ jobs:
       - name: Install @babel dependencies
         run: npm install @babel/eslint-plugin@latest @babel/eslint-parser@latest @babel/eslint-plugin@latest @babel/plugin-syntax-class-properties@latest @babel/preset-env@latest @eslint/compat@latest @eslint/eslintrc@latest @eslint/js@latest eslint@latest eslint-plugin-import@latest eslint-plugin-n@latest eslint-plugin-promise@latest --save-dev      
       - name: Lint Code Base
-        uses: github/super-linter@v6
+        #uses: github/super-linter@v6
+        uses: github/super-linter@latest
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: "main"
