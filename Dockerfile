@@ -8,9 +8,7 @@ COPY ["package-lock.json", "/app/"]
 RUN npm -v
 RUN npm update -g --no-fund
 RUN npm -v
-RUN npm install -g npm@latest
-RUN npm -v
-ENV NODE_ENV=production
+RUN rm -rf node_modules
 RUN npm ci --omit=dev --no-fund
 
 COPY ["src", "/app/src"]
