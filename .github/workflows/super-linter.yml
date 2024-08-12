@@ -44,6 +44,6 @@ jobs:
           #FILTER_REGEX_EXCLUDE: (onstar.js|onstar.html|vehicle.js)
           LINTER_RULES_PATH: /          
           #JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.yml #Prior to ESLint V9
-          JAVASCRIPT_ES_CONFIG_FILE: eslint.config.cjs
+          #JAVASCRIPT_ES_CONFIG_FILE: eslint.config.cjs
           VALIDATE_JAVASCRIPT_ES: true
           ESLINT_USE_FLAT_CONFIG: false
