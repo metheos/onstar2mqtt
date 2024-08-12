@@ -5,6 +5,7 @@ WORKDIR /app
 
 COPY ["package.json", "/app/"]
 COPY ["package-lock.json", "/app/"]
+RUN npm -g update
 RUN npm ci --omit=dev --no-fund
 
 COPY ["src", "/app/src"]
