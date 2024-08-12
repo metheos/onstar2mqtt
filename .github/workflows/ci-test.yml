@@ -48,7 +48,7 @@ jobs:
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }} 
           
-      - run: npm ci --legacy-peer-deps
+      - run: npm ci
       - run: npm run build --if-present
       - run: npm run lint
       - run: npm test
