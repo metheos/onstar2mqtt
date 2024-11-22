@@ -5,3 +5,4 @@ node_modules/
 onstar2mqtt.env
 *.env*
 coverage
+*_tokens.json
